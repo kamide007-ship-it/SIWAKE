@@ -1543,7 +1543,7 @@ HTML = r'''<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>E-MIETA仕訳EXCEL | スマート経営管理</title>
+<title>E-MIETA・銀行仕訳 | スマート仕訳EXCEL×MIETA経営健康診断</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%232d7a4a' width='100' height='100'/><text x='50' y='65' font-size='60' font-weight='bold' fill='%23a0d995' text-anchor='middle' font-family='Arial'>E</text></svg>">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -2158,8 +2158,8 @@ HTML = r'''<!DOCTYPE html>
       </svg>
     </div>
 
-    <h1>経営管理システム</h1>
-    <p>🌲 スマート仕訳Excel × 森の中の経営診断</p>
+    <h1>E-MIETA・銀行仕訳</h1>
+    <p>🌲 スマート仕訳EXCEL × MIETA経営健康診断</p>
 
     <!-- SAMO キャラクター（背景透過） -->
     <svg class="character-corner" viewBox="0 0 70 90" xmlns="http://www.w3.org/2000/svg">
