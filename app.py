@@ -1573,83 +1573,75 @@ HTML = r'''<!DOCTYPE html>
   .container {
     background: white;
     border-radius: 28px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(200, 200, 200, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
     width: 100%;
     max-width: 720px;
     overflow: hidden;
     animation: fadeIn 0.5s ease-out;
     position: relative;
+    border: 6px solid;
+    border-image: linear-gradient(135deg, #00bcd4 0%, #4ade80 100%) 1;
   }
 
   .header {
     background: white;
-    background-size: 200% 200%;
-    padding: 40px 36px 32px;
-    text-align: center;
+    padding: 24px 28px;
     position: relative;
     overflow: hidden;
   }
 
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .character-logo {
+    height: 100px;
+    width: auto;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.08));
+    flex-shrink: 0;
+  }
+
+  .header-title h1 {
+    font-size: 48px;
+    color: white;
+    font-weight: 900;
+    background: linear-gradient(135deg, #1e5a7a 0%, #2d7a99 100%);
+    padding: 24px 32px;
+    border-radius: 16px;
+    margin: 0;
+    text-align: center;
+    letter-spacing: -1px;
+    box-shadow: 0 4px 15px rgba(30, 90, 122, 0.2);
+  }
+
+  .header-title .subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-top: 12px;
+    text-align: center;
+    font-weight: 500;
+  }
+
   .header::before {
-    content: '';
-    position: absolute;
-    top: 0; right: 0;
-    width: 0; height: 0;
-    background: transparent;
-    border-radius: 50%;
+    display: none;
   }
 
   .header::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 0; height: 0;
-    background: transparent;
-    border-radius: 50%;
+    display: none;
   }
 
   .logo-container {
-    position: relative;
-    z-index: 2;
-    margin-bottom: 12px;
+    display: none;
   }
 
   .logo-svg {
-    height: 60px;
-    width: auto;
-    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
-  }
-
-  .header h1 {
-    font-size: 28px;
-    color: #333;
-    font-weight: 900;
-    margin-bottom: 4px;
-    position: relative;
-    z-index: 2;
-    letter-spacing: -0.5px;
-    text-shadow: none;
-  }
-
-  .header p {
-    font-size: 13px;
-    color: #888;
-    margin-top: 4px;
-    font-weight: 500;
-    position: relative;
-    z-index: 2;
+    display: none;
   }
 
   .character-corner {
-    position: absolute;
-    bottom: 10px;
-    right: 20px;
-    height: 80px;
-    width: auto;
-    opacity: 1;
-    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.08));
-    animation: sway 3s ease-in-out infinite;
-    z-index: 1;
+    display: none;
   }
 
   /* タブ */
@@ -2147,43 +2139,13 @@ HTML = r'''<!DOCTYPE html>
 <div class="container">
   <div class="header">
     <!-- ロゴ -->
-    <div class="logo-container">
-      <img src="/static/logo.svg" alt="E-MIETA Logo" class="logo-svg">
+    <div class="header-top">
+      <img src="/static/logo.svg" alt="SAMO Character" class="character-logo">
+      <div class="header-title">
+        <h1>E-MIETA</h1>
+        <p class="subtitle">スマート仕訳×MIETA経営健康診断</p>
+      </div>
     </div>
-
-    <h1>E-MIETA・銀行仕訳</h1>
-    <p>🌲 スマート仕訳EXCEL × MIETA経営健康診断</p>
-
-    <!-- SAMO キャラクター（背景透過） -->
-    <svg class="character-corner" viewBox="0 0 70 90" xmlns="http://www.w3.org/2000/svg">
-      <!-- 体 -->
-      <ellipse cx="35" cy="55" rx="16" ry="22" fill="#7ac97f" opacity="0.9"/>
-      <!-- 頭 -->
-      <circle cx="35" cy="28" r="14" fill="#7ac97f" opacity="0.95"/>
-      <!-- 耳 -->
-      <circle cx="23" cy="20" r="6" fill="#5fa972" opacity="0.8"/>
-      <circle cx="47" cy="20" r="6" fill="#5fa972" opacity="0.8"/>
-      <!-- 目の白い部分 -->
-      <circle cx="30" cy="26" r="3" fill="white" opacity="0.9"/>
-      <circle cx="40" cy="26" r="3" fill="white" opacity="0.9"/>
-      <!-- 目の黒い部分 -->
-      <circle cx="30" cy="27" r="1.5" fill="#4a9fc8"/>
-      <circle cx="40" cy="27" r="1.5" fill="#4a9fc8"/>
-      <!-- 目の光 -->
-      <circle cx="30.5" cy="26" r="0.8" fill="white" opacity="0.7"/>
-      <circle cx="40.5" cy="26" r="0.8" fill="white" opacity="0.7"/>
-      <!-- 笑み -->
-      <path d="M32 33 Q35 35 38 33" stroke="#4a9fc8" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.8"/>
-      <!-- 頬 -->
-      <circle cx="24" cy="31" r="2" fill="#8ecf88" opacity="0.5"/>
-      <circle cx="46" cy="31" r="2" fill="#8ecf88" opacity="0.5"/>
-      <!-- 手 -->
-      <circle cx="20" cy="50" r="5" fill="#5fa972" opacity="0.85"/>
-      <circle cx="50" cy="50" r="5" fill="#5fa972" opacity="0.85"/>
-      <!-- 足 -->
-      <rect x="29" y="74" width="5" height="10" fill="#4a9fc8" rx="2.5" opacity="0.8"/>
-      <rect x="36" y="74" width="5" height="10" fill="#4a9fc8" rx="2.5" opacity="0.8"/>
-    </svg>
   </div>
 
   <div class="tabs">
