@@ -1543,164 +1543,637 @@ HTML = r'''<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>経営管理システム | Resolution Engine Inc.</title>
+<title>E-MIETA仕訳EXCEL | スマート経営管理</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+  @keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
+
   body {
-    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    background: linear-gradient(135deg, #f5e6f3 0%, #e6f5f8 50%, #f0e6f8 100%);
     min-height: 100vh; display: flex; align-items: flex-start;
     justify-content: center; padding: 30px 20px;
   }
-  .container { background: white; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); width: 100%; max-width: 720px; overflow: hidden; }
-  .header { background: linear-gradient(135deg, #1F3864, #0f3460); padding: 28px 36px; text-align: center; }
-  .header h1 { font-size: 20px; color: white; font-weight: 700; }
-  .header p { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 4px; }
-  
+
+  .container {
+    background: white;
+    border-radius: 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05);
+    width: 100%;
+    max-width: 720px;
+    overflow: hidden;
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #d8bfd8 0%, #c8e6f5 50%, #dfc8f0 100%);
+    padding: 32px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .header h1 {
+    font-size: 26px;
+    color: #5a3d7a;
+    font-weight: 800;
+    margin-bottom: 6px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header p {
+    font-size: 13px;
+    color: #7a5a9a;
+    margin-top: 4px;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+  }
+
   /* タブ */
-  .tabs { display: flex; border-bottom: 2px solid #eee; background: #f8f9fa; }
-  .tab { flex: 1; padding: 14px 8px; text-align: center; font-size: 13px; font-weight: 600; cursor: pointer; color: #888; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
-  .tab.active { color: #1F3864; border-bottom-color: #1F3864; background: white; }
-  .tab-icon { font-size: 18px; display: block; margin-bottom: 3px; }
-  .panel { display: none; padding: 28px; }
+  .tabs {
+    display: flex;
+    border-bottom: 2px solid #f0e6f8;
+    background: #faf8fc;
+    padding: 0 8px;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 16px 8px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #9a8aaa;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .tab:hover { color: #7a5a9a; }
+
+  .tab.active {
+    color: #d8479f;
+    border-bottom-color: #d8479f;
+    background: white;
+  }
+
+  .tab-icon {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 4px;
+    transition: transform 0.3s ease;
+  }
+
+  .tab.active .tab-icon { transform: scale(1.15); }
+
+  .panel {
+    display: none;
+    padding: 28px;
+    animation: fadeIn 0.3s ease-out;
+  }
+
   .panel.active { display: block; }
 
   /* 共通 */
-  .section-title { font-size: 13px; font-weight: 700; color: #1F3864; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid #DEEAF1; }
-  .upload-area { border: 2.5px dashed #c0d0e0; border-radius: 14px; padding: 28px; text-align: center; cursor: pointer; transition: all 0.3s; background: #fafcff; margin-bottom: 16px; position: relative; }
-  .upload-area:hover, .upload-area.drag { border-color: #1F3864; background: #f0f4ff; }
-  .upload-area input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-  .upload-icon { font-size: 32px; margin-bottom: 8px; }
-  .upload-text { font-size: 14px; color: #444; font-weight: 600; }
-  .upload-sub  { font-size: 11px; color: #888; margin-top: 4px; }
-  .file-info { background: #e8f5e9; border-radius: 10px; padding: 10px 16px; display: none; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 13px; color: #2e7d32; font-weight: 600; }
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #5a3d7a;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #f0e6f8;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .upload-area {
+    border: 2.5px dashed #dcc8e8;
+    border-radius: 18px;
+    padding: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #faf8fc 0%, #f5f0fa 100%);
+    margin-bottom: 18px;
+    position: relative;
+  }
+
+  .upload-area:hover {
+    border-color: #d8479f;
+    background: linear-gradient(135deg, #fef5fb 0%, #f8ecfb 100%);
+    transform: translateY(-2px);
+  }
+
+  .upload-area.drag {
+    border-color: #d8479f;
+    background: linear-gradient(135deg, #fef5fb 0%, #f8ecfb 100%);
+    box-shadow: 0 8px 20px rgba(216, 71, 159, 0.15);
+  }
+
+  .upload-area input[type=file] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .upload-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+    animation: pulse 2s infinite;
+  }
+
+  .upload-text {
+    font-size: 15px;
+    color: #5a3d7a;
+    font-weight: 600;
+  }
+
+  .upload-sub {
+    font-size: 12px;
+    color: #a08ab8;
+    margin-top: 6px;
+  }
+
+  .file-info {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: #2e7d32;
+    font-weight: 600;
+  }
+
   .file-info.show { display: flex; }
-  .btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #1F3864, #2e52a0); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.3s; }
-  .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(31,56,100,0.4); }
-  .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-  .btn-eval { background: linear-gradient(135deg, #1b5e20, #2e7d32); }
-  .btn-eval:hover:not(:disabled) { box-shadow: 0 8px 24px rgba(46,125,50,0.4); }
-  .progress { display: none; margin-top: 16px; background: #f0f0f0; border-radius: 100px; height: 6px; overflow: hidden; }
+
+  .btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #d8479f, #e876b8);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(216, 71, 159, 0.2);
+  }
+
+  .btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(216, 71, 159, 0.35);
+  }
+
+  .btn:active:not(:disabled) { transform: translateY(-1px); }
+
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-eval {
+    background: linear-gradient(135deg, #72c48f, #8dd9a3);
+    box-shadow: 0 4px 15px rgba(114, 196, 143, 0.2);
+  }
+
+  .btn-eval:hover:not(:disabled) {
+    box-shadow: 0 8px 25px rgba(114, 196, 143, 0.35);
+  }
+
+  .progress {
+    display: none;
+    margin-top: 18px;
+    background: #f0e6f8;
+    border-radius: 100px;
+    height: 8px;
+    overflow: hidden;
+  }
+
   .progress.show { display: block; }
-  .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #1F3864, #4a90e2); border-radius: 100px; transition: width 0.3s; }
-  .status { text-align: center; font-size: 13px; color: #666; margin-top: 10px; min-height: 20px; }
-  .result { display: none; margin-top: 20px; background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-radius: 14px; padding: 20px; text-align: center; }
+
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #d8479f, #e876b8, #72c48f);
+    border-radius: 100px;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px rgba(216, 71, 159, 0.4);
+  }
+
+  .status {
+    text-align: center;
+    font-size: 13px;
+    color: #7a5a9a;
+    margin-top: 12px;
+    min-height: 20px;
+    font-weight: 500;
+  }
+
+  .result {
+    display: none;
+    margin-top: 20px;
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+  }
+
   .result.show { display: block; }
-  .dl-btn { display: inline-block; padding: 12px 28px; background: #2e7d32; color: white; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 14px; transition: all 0.3s; }
-  .dl-btn:hover { background: #1b5e20; transform: translateY(-2px); }
-  .error-msg { display: none; margin-top: 14px; padding: 12px; border-radius: 10px; background: #ffebee; color: #c62828; font-size: 12px; }
+
+  .dl-btn {
+    display: inline-block;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #72c48f, #8dd9a3);
+    color: white;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(114, 196, 143, 0.2);
+  }
+
+  .dl-btn:hover {
+    background: linear-gradient(135deg, #63b37f, #7ec894);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(114, 196, 143, 0.35);
+  }
+
+  .error-msg {
+    display: none;
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ffebee, #ffcdd2);
+    color: #c62828;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
   .error-msg.show { display: block; }
 
   /* P&L テキスト入力 */
-  .pl-textarea { width: 100%; height: 260px; padding: 14px; border: 2px solid #ddd; border-radius: 12px; font-size: 13px; font-family: monospace; resize: vertical; transition: border 0.2s; }
-  .pl-textarea:focus { outline: none; border-color: #1F3864; }
-  .hint { font-size: 11px; color: #888; margin-top: 6px; margin-bottom: 14px; }
-  
+  .pl-textarea {
+    width: 100%;
+    height: 260px;
+    padding: 14px;
+    border: 2px solid #e6dde8;
+    border-radius: 14px;
+    font-size: 13px;
+    font-family: 'Courier New', monospace;
+    resize: vertical;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #faf8fc 0%, #f5f0fa 100%);
+  }
+
+  .pl-textarea:focus {
+    outline: none;
+    border-color: #d8479f;
+    box-shadow: 0 0 0 3px rgba(216, 71, 159, 0.1);
+  }
+
+  .hint {
+    font-size: 12px;
+    color: #a08ab8;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
   /* 評価結果 */
   .eval-result { display: none; }
   .eval-result.show { display: block; margin-top: 24px; }
-  .verdict-box { border-radius: 16px; padding: 20px 24px; margin-bottom: 20px; text-align: center; }
+
+  .verdict-box {
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 22px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  }
+
   .verdict-excellent { background: linear-gradient(135deg, #e8f5e9, #b9f6ca); border: 2px solid #2e7d32; }
   .verdict-good      { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border: 2px solid #388e3c; }
   .verdict-ok        { background: linear-gradient(135deg, #fffde7, #fff9c4); border: 2px solid #f9a825; }
   .verdict-warn      { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border: 2px solid #ef6c00; }
   .verdict-bad       { background: linear-gradient(135deg, #ffebee, #ffcdd2); border: 2px solid #c62828; }
-  .verdict-label { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
-  .verdict-score { font-size: 14px; opacity: 0.8; }
-  .verdict-period { font-size: 13px; font-weight: 600; margin-bottom: 8px; opacity: 0.7; }
-  
+
+  .verdict-label {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .verdict-score {
+    font-size: 15px;
+    opacity: 0.9;
+    font-weight: 600;
+  }
+
+  .verdict-period {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+
   /* KPI表 */
-  .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-  .kpi-card { border-radius: 12px; padding: 14px 16px; }
-  .kpi-card.GOOD { background: #e8f5e9; border-left: 4px solid #2e7d32; }
-  .kpi-card.OK   { background: #fff8e1; border-left: 4px solid #f9a825; }
-  .kpi-card.WARN { background: #fff3e0; border-left: 4px solid #ef6c00; }
-  .kpi-card.BAD  { background: #ffebee; border-left: 4px solid #c62828; }
-  .kpi-name  { font-size: 11px; color: #666; margin-bottom: 4px; }
-  .kpi-value { font-size: 22px; font-weight: 800; }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  .kpi-card {
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+  }
+
+  .kpi-card:hover { transform: translateY(-2px); }
+
+  .kpi-card.GOOD { background: linear-gradient(135deg, #e8f5e9, #d4f0da); border-left: 5px solid #2e7d32; }
+  .kpi-card.OK   { background: linear-gradient(135deg, #fff8e1, #fffbee); border-left: 5px solid #f9a825; }
+  .kpi-card.WARN { background: linear-gradient(135deg, #fff3e0, #fff9f0); border-left: 5px solid #ef6c00; }
+  .kpi-card.BAD  { background: linear-gradient(135deg, #ffebee, #ffe8ec); border-left: 5px solid #c62828; }
+
+  .kpi-name  {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .kpi-value {
+    font-size: 24px;
+    font-weight: 800;
+  }
+
   .kpi-value.GOOD { color: #2e7d32; }
   .kpi-value.OK   { color: #f9a825; }
   .kpi-value.WARN { color: #ef6c00; }
   .kpi-value.BAD  { color: #c62828; }
-  .kpi-bench { font-size: 10px; color: #888; margin-top: 3px; }
-  .kpi-badge { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 100px; float: right; }
+
+  .kpi-bench {
+    font-size: 11px;
+    color: #888;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  .kpi-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 100px;
+    float: right;
+  }
+
   .kpi-badge.GOOD { background: #2e7d32; color: white; }
   .kpi-badge.OK   { background: #f9a825; color: white; }
   .kpi-badge.WARN { background: #ef6c00; color: white; }
   .kpi-badge.BAD  { background: #c62828; color: white; }
-  
+
   /* P&L表 */
-  .pl-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px; }
-  .pl-table th { background: #1F3864; color: white; padding: 8px 12px; text-align: left; }
-  .pl-table td { padding: 7px 12px; border-bottom: 1px solid #eee; }
+  .pl-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 22px;
+    font-size: 13px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .pl-table th {
+    background: linear-gradient(135deg, #d8479f, #e876b8);
+    color: white;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+  }
+
+  .pl-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #f0e6f8;
+  }
+
   .pl-table tr:last-child td { border-bottom: none; }
-  .pl-table .subtotal td { background: #f5f5f5; font-weight: 600; }
-  .pl-table .profit td  { background: #e8f5e9; font-weight: 700; color: #1b5e20; }
-  .pl-table .profit-neg td { background: #ffebee; font-weight: 700; color: #c62828; }
-  .pl-table .right { text-align: right; font-variant-numeric: tabular-nums; }
-  .pl-table .ratio { color: #888; font-size: 11px; }
-  
+
+  .pl-table .subtotal td {
+    background: #f5f0fa;
+    font-weight: 600;
+  }
+
+  .pl-table .profit td {
+    background: linear-gradient(135deg, #e8f5e9, #d4f0da);
+    font-weight: 700;
+    color: #1b5e20;
+  }
+
+  .pl-table .profit-neg td {
+    background: linear-gradient(135deg, #ffebee, #ffe8ec);
+    font-weight: 700;
+    color: #c62828;
+  }
+
+  .pl-table .right {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pl-table .ratio {
+    color: #888;
+    font-size: 11px;
+  }
+
   /* 銀行突合 */
-  .bank-match { background: #f8faff; border: 1px solid #c5d5e8; border-radius: 12px; padding: 16px; margin-bottom: 20px; }
-  .bank-match h4 { font-size: 13px; font-weight: 700; color: #1F3864; margin-bottom: 10px; }
-  .match-row { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; border-bottom: 1px solid #eee; }
+  .bank-match {
+    background: linear-gradient(135deg, #f0f7ff, #eff5fb);
+    border: 1px solid #dce8f5;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  }
+
+  .bank-match h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #5a7a9a;
+    margin-bottom: 12px;
+  }
+
+  .match-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0e6f8;
+  }
+
   .match-row:last-child { border-bottom: none; }
-  
+
   /* アドバイス */
-  .advice-box { border-radius: 12px; padding: 14px 16px; background: #f8f9fa; margin-bottom: 8px; border-left: 4px solid #1F3864; }
-  .advice-title { font-size: 12px; font-weight: 700; color: #1F3864; margin-bottom: 4px; }
-  .advice-text  { font-size: 12px; color: #444; line-height: 1.6; }
+  .advice-box {
+    border-radius: 14px;
+    padding: 16px;
+    background: linear-gradient(135deg, #faf8fc, #f5f0fa);
+    margin-bottom: 10px;
+    border-left: 4px solid #d8479f;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    transition: all 0.3s ease;
+  }
+
+  .advice-box:hover { transform: translateX(2px); }
+
+  .advice-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #5a3d7a;
+    margin-bottom: 6px;
+  }
+
+  .advice-text {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.7;
+    font-weight: 500;
+  }
 
   /* features */
-  .features { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
-  .feature { font-size: 12px; color: #444; display: flex; align-items: center; gap: 6px; background: #f0f7ff; padding: 8px 12px; border-radius: 8px; }
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .feature {
+    font-size: 13px;
+    color: #5a3d7a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #f5e6f8, #e6f5f8);
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    transition: all 0.3s ease;
+  }
+
+  .feature:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
 </style>
 </head>
 <body>
 <div class="container">
   <div class="header">
-    <h1>🏦 Resolution Engine Inc. | 経営管理システム</h1>
-    <p>銀行明細自動変換 ＋ 月次経営評価</p>
+    <h1>✨ E-MIETA仕訳EXCEL</h1>
+    <p>スマート経営分析 × 自動Excel生成</p>
   </div>
 
   <div class="tabs">
     <div class="tab active" onclick="switchTab('excel')">
-      <span class="tab-icon">📊</span>Excel変換
+      <span class="tab-icon">📊</span><span>CSV変換</span>
     </div>
     <div class="tab" onclick="switchTab('eval')">
-      <span class="tab-icon">🏥</span>経営評価
+      <span class="tab-icon">🔍</span><span>経営分析</span>
     </div>
   </div>
 
   <!-- ===== TAB1: Excel変換 ===== -->
   <div class="panel active" id="panel-excel">
     <div class="features">
-      <div class="feature"><span>📅</span> 月別シート自動振り分け</div>
-      <div class="feature"><span>🏷️</span> 科目・カテゴリ自動付与</div>
-      <div class="feature"><span>💰</span> 残高Excel数式で計算</div>
-      <div class="feature"><span>📂</span> カテゴリ別集計シート</div>
+      <div class="feature"><span>📅</span> 月別自動振分け</div>
+      <div class="feature"><span>🏷️</span> 科目自動判定</div>
+      <div class="feature"><span>💰</span> 数式計算対応</div>
+      <div class="feature"><span>📊</span> 集計シート生成</div>
     </div>
 
     <div class="section-title">📄 銀行明細CSVをアップロード</div>
     <div class="upload-area" id="dropZone">
       <input type="file" id="fileInput" accept=".csv">
-      <div class="upload-icon">📄</div>
-      <div class="upload-text">CSVをここにドロップ</div>
+      <div class="upload-icon">📥</div>
+      <div class="upload-text">CSVファイルをここにドロップ</div>
       <div class="upload-sub">またはクリックして選択（Shift-JIS/UTF-8 自動判定）</div>
     </div>
-    <div class="file-info" id="fileInfo"><span>📎</span><span id="fileName"></span></div>
-    <button class="btn" id="convertBtn" disabled onclick="convert()">⚡ Excelを生成する</button>
+    <div class="file-info" id="fileInfo"><span>✓</span><span id="fileName"></span></div>
+    <button class="btn" id="convertBtn" disabled onclick="convert()">🚀 Excelを生成する</button>
     <div class="progress" id="progress"><div class="progress-bar" id="progressBar"></div></div>
     <div class="status" id="status"></div>
     <div class="error-msg" id="errorMsg"></div>
     <div class="result" id="result">
-      <div style="font-size:36px;margin-bottom:8px">✅</div>
-      <div style="font-weight:700;font-size:15px;color:#1b5e20;margin-bottom:14px">Excel生成完了！</div>
+      <div style="font-size:48px;margin-bottom:12px">🎉</div>
+      <div style="font-weight:700;font-size:17px;color:#1b5e20;margin-bottom:4px">Excel生成完了！</div>
+      <div style="font-size:12px;color:#666;margin-bottom:16px">すぐにダウンロードできます</div>
       <a id="dlLink" class="dl-btn" href="#" download>📥 Excelをダウンロード</a>
+    </div>
+
+    <!-- 使い方ガイド -->
+    <div style="margin-top:28px; padding-top:28px; border-top: 2px solid #f0e6f8;">
+      <div class="section-title">💡 CSV変換の使い方</div>
+      <div class="advice-box">
+        <div class="advice-title">【ステップ1】対応するCSV形式を確認</div>
+        <div class="advice-text">
+          銀行明細は以下の列構成に対応しています：<br>
+          <strong>日付 | 摘要 | 入金金額 | 出金金額 | 残高 | メモ</strong><br>
+          日付は「YYYYMMDD」「YYYY/MM/DD」「YYYY-MM-DD」形式に対応
+        </div>
+      </div>
+      <div class="advice-box">
+        <div class="advice-title">【ステップ2】ファイルをアップロード</div>
+        <div class="advice-text">
+          銀行明細CSVファイルをアップロードエリアにドロップするか、クリックして選択してください。Shift-JISとUTF-8は自動判定されます。
+        </div>
+      </div>
+      <div class="advice-box">
+        <div class="advice-title">【ステップ3】Excel生成ボタンをクリック</div>
+        <div class="advice-text">
+          「Excelを生成する」ボタンをクリックすると、以下が自動生成されます：<br>
+          • 📊 年間サマリーシート（月別集計）<br>
+          • 📋 各月シート（月別詳細明細）<br>
+          • 🏷️ カテゴリ別集計シート
+        </div>
+      </div>
+      <div class="advice-box">
+        <div class="advice-title">【ステップ4】Excelファイルをダウンロード</div>
+        <div class="advice-text">
+          生成が完了したら「Excelをダウンロード」ボタンからファイルをダウンロードできます。Excel内の数式は自動更新されます。
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- ===== TAB2: 経営評価 ===== -->
+  <!-- ===== TAB2: 経営分析 ===== -->
   <div class="panel" id="panel-eval">
     <div class="section-title">📋 月次P&L内訳を貼り付け</div>
     <textarea class="pl-textarea" id="plText" placeholder="例：
@@ -1713,24 +2186,63 @@ HTML = r'''<!DOCTYPE html>
 交際費　　　17,000
 旅費交通費　250,000
 （以下つづき...）"></textarea>
-    <div class="hint">💡 経費の内訳テキストをそのままコピー＆ペーストするだけでOKです</div>
+    <div class="hint">💡 会計ソフトなどからP&Lをコピペするだけで分析できます</div>
 
-    <div class="section-title" style="margin-top:4px">🏦 銀行明細CSVと突合（任意）</div>
+    <div class="section-title" style="margin-top:20px">🏦 銀行明細CSV（オプション）</div>
     <div class="upload-area" id="dropZone2">
       <input type="file" id="fileInput2" accept=".csv">
-      <div class="upload-icon">📄</div>
+      <div class="upload-icon">📤</div>
       <div class="upload-text">CSVをドロップ（省略可）</div>
-      <div class="upload-sub">入力すると銀行残高・入出金と自動照合します</div>
+      <div class="upload-sub">入力すると銀行残高と自動照合します</div>
     </div>
-    <div class="file-info" id="fileInfo2"><span>📎</span><span id="fileName2"></span></div>
+    <div class="file-info" id="fileInfo2"><span>✓</span><span id="fileName2"></span></div>
 
-    <button class="btn btn-eval" id="evalBtn" onclick="evaluate()">🔍 経営評価を実行する</button>
+    <button class="btn btn-eval" id="evalBtn" onclick="evaluate()">🔍 経営分析を実行</button>
     <div class="progress" id="progress2"><div class="progress-bar" id="progressBar2"></div></div>
     <div class="status" id="status2"></div>
     <div class="error-msg" id="errorMsg2"></div>
 
     <!-- 評価結果 -->
     <div class="eval-result" id="evalResult"></div>
+
+    <!-- 使い方ガイド -->
+    <div style="margin-top:28px; padding-top:28px; border-top: 2px solid #f0e6f8;">
+      <div class="section-title">💡 経営分析の使い方</div>
+      <div class="advice-box">
+        <div class="advice-title">【分析結果の見方】総合スコア</div>
+        <div class="advice-text">
+          <strong>◎ 優（85～100点）</strong>：経営状況が優秀。このペースを維持してください。<br>
+          <strong>○ 良（70～84点）</strong>：経営状況が良好。さらなる改善の余地あり。<br>
+          <strong>△ 注（55～69点）</strong>：注意が必要。改善策を実行しましょう。<br>
+          <strong>✕ 要（0～54点）</strong>：即座の改善が必要です。アドバイスを参考に。
+        </div>
+      </div>
+      <div class="advice-box">
+        <div class="advice-title">【KPI指標の意味】</div>
+        <div class="advice-text">
+          <strong>粗利率</strong>：売上から原価を引いた利益の割合。高いほど良好。<br>
+          <strong>営業利益率</strong>：売上から全ての費用を引いた利益の割合。企業の稼ぐ力を示します。<br>
+          <strong>人件費率</strong>：売上に占める人件費の割合。適切な範囲内が理想的。<br>
+          <strong>固定費率</strong>：売上に占める固定費の割合。低いほど経営の効率性が高い。
+        </div>
+      </div>
+      <div class="advice-box">
+        <div class="advice-title">【損益計算書の読み方】</div>
+        <div class="advice-text">
+          売上から順に原価、経費が差し引かれて、最終的な利益が表示されます。<br>
+          「売上比」の列は、各項目が売上に占める割合。<br>
+          <span style="background:#d4f0da;padding:2px 6px;border-radius:4px;display:inline-block;margin-top:6px;font-weight:600;color:#1b5e20;">green=利益</span>
+          <span style="background:#ffe8ec;padding:2px 6px;border-radius:4px;display:inline-block;margin-left:6px;font-weight:600;color:#c62828;">red=損失</span>
+        </div>
+      </div>
+      <div class="advice-box">
+        <div class="advice-title">【銀行データとの照合】</div>
+        <div class="advice-text">
+          CSV銀行明細をアップロードすると、P&L売上と銀行の入金額を比較できます。<br>
+          差額が出た場合は、未計上や入力ミスの可能性があります。
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
