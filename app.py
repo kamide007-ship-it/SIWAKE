@@ -1619,7 +1619,7 @@ HTML = r'''<!DOCTYPE html>
   .logo-svg {
     height: 60px;
     width: auto;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
   }
 
   .header h1 {
@@ -1648,7 +1648,8 @@ HTML = r'''<!DOCTYPE html>
     right: 20px;
     height: 80px;
     width: auto;
-    opacity: 0.7;
+    opacity: 1;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.08));
     animation: sway 3s ease-in-out infinite;
     z-index: 1;
   }
@@ -2150,41 +2151,45 @@ HTML = r'''<!DOCTYPE html>
     <!-- ロゴ -->
     <div class="logo-container">
       <svg class="logo-svg" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
-        <!-- 森のイメージ背景 -->
-        <g opacity="0.1">
-          <path d="M20 40 Q30 20 40 40 Q50 20 60 40" stroke="white" stroke-width="2" fill="none"/>
-          <path d="M120 40 Q130 20 140 40 Q150 20 160 40" stroke="white" stroke-width="2" fill="none"/>
-        </g>
-        <!-- E-MIETAテキスト -->
-        <text x="100" y="45" font-size="36" font-weight="900" fill="white" text-anchor="middle" font-family="Arial, sans-serif">E-MIETA</text>
+        <!-- E-MIETAテキスト（ネイビー色） -->
+        <text x="100" y="48" font-size="40" font-weight="900" fill="#1e5a7a" text-anchor="middle" font-family="Arial, sans-serif">E-MIETA</text>
+        <!-- テキストの背景グロー効果 -->
+        <text x="100" y="48" font-size="40" font-weight="900" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" text-anchor="middle" font-family="Arial, sans-serif">E-MIETA</text>
       </svg>
     </div>
 
     <h1>経営管理システム</h1>
     <p>🌲 スマート仕訳Excel × 森の中の経営診断</p>
 
-    <!-- SAMO キャラクター -->
-    <svg class="character-corner" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+    <!-- SAMO キャラクター（背景透過） -->
+    <svg class="character-corner" viewBox="0 0 70 90" xmlns="http://www.w3.org/2000/svg">
       <!-- 体 -->
-      <ellipse cx="30" cy="50" rx="15" ry="20" fill="#8ecf88"/>
+      <ellipse cx="35" cy="55" rx="16" ry="22" fill="#3a9f5d" opacity="0.9"/>
       <!-- 頭 -->
-      <circle cx="30" cy="25" r="12" fill="#8ecf88"/>
+      <circle cx="35" cy="28" r="14" fill="#3a9f5d" opacity="0.95"/>
       <!-- 耳 -->
-      <circle cx="20" cy="18" r="5" fill="#8ecf88"/>
-      <circle cx="40" cy="18" r="5" fill="#8ecf88"/>
-      <!-- 目 -->
-      <circle cx="26" cy="23" r="2" fill="white"/>
-      <circle cx="34" cy="23" r="2" fill="white"/>
-      <circle cx="26" cy="23" r="1" fill="#000"/>
-      <circle cx="34" cy="23" r="1" fill="#000"/>
+      <circle cx="23" cy="20" r="6" fill="#2d7a4a" opacity="0.8"/>
+      <circle cx="47" cy="20" r="6" fill="#2d7a4a" opacity="0.8"/>
+      <!-- 目の白い部分 -->
+      <circle cx="30" cy="26" r="3" fill="white" opacity="0.9"/>
+      <circle cx="40" cy="26" r="3" fill="white" opacity="0.9"/>
+      <!-- 目の黒い部分 -->
+      <circle cx="30" cy="27" r="1.5" fill="#1e5a7a"/>
+      <circle cx="40" cy="27" r="1.5" fill="#1e5a7a"/>
+      <!-- 目の光 -->
+      <circle cx="30.5" cy="26" r="0.8" fill="white" opacity="0.7"/>
+      <circle cx="40.5" cy="26" r="0.8" fill="white" opacity="0.7"/>
       <!-- 笑み -->
-      <path d="M28 28 Q30 30 32 28" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M32 33 Q35 35 38 33" stroke="#1e5a7a" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.8"/>
+      <!-- 頬 -->
+      <circle cx="24" cy="31" r="2" fill="#4fb573" opacity="0.5"/>
+      <circle cx="46" cy="31" r="2" fill="#4fb573" opacity="0.5"/>
       <!-- 手 -->
-      <circle cx="18" cy="45" r="4" fill="#7ac97f"/>
-      <circle cx="42" cy="45" r="4" fill="#7ac97f"/>
+      <circle cx="20" cy="50" r="5" fill="#2d7a4a" opacity="0.85"/>
+      <circle cx="50" cy="50" r="5" fill="#2d7a4a" opacity="0.85"/>
       <!-- 足 -->
-      <rect x="24" y="68" width="4" height="8" fill="#6ab972" rx="2"/>
-      <rect x="32" y="68" width="4" height="8" fill="#6ab972" rx="2"/>
+      <rect x="29" y="74" width="5" height="10" fill="#1e5a7a" rx="2.5" opacity="0.8"/>
+      <rect x="36" y="74" width="5" height="10" fill="#1e5a7a" rx="2.5" opacity="0.8"/>
     </svg>
   </div>
 
