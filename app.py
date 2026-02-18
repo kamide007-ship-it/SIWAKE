@@ -1555,7 +1555,7 @@ HTML = r'''<!DOCTYPE html>
 
   body {
     font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
-    background: linear-gradient(180deg, #e0f7fa 0%, #c8eef5 40%, #a8e6d4 100%);
+    background: white;
     min-height: 100vh; display: flex; align-items: flex-start;
     justify-content: center; padding: 30px 20px;
     position: relative;
@@ -1565,17 +1565,15 @@ HTML = r'''<!DOCTYPE html>
     content: '';
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background:
-      radial-gradient(circle at 20% 80%, rgba(57, 159, 93, 0.1) 0%, transparent 40%),
-      radial-gradient(circle at 80% 20%, rgba(30, 90, 122, 0.08) 0%, transparent 40%);
+    background: transparent;
     pointer-events: none;
     z-index: -1;
   }
 
   .container {
-    background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(240,248,245,0.98) 100%);
+    background: white;
     border-radius: 28px;
-    box-shadow: 0 20px 60px rgba(45, 122, 74, 0.12), 0 0 0 1px rgba(45, 122, 74, 0.08);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(200, 200, 200, 0.1);
     width: 100%;
     max-width: 720px;
     overflow: hidden;
@@ -1584,7 +1582,7 @@ HTML = r'''<!DOCTYPE html>
   }
 
   .header {
-    background: linear-gradient(135deg, #80deea 0%, #a8e6d4 50%, #6ec8d6 100%);
+    background: white;
     background-size: 200% 200%;
     padding: 40px 36px 32px;
     text-align: center;
@@ -1595,18 +1593,18 @@ HTML = r'''<!DOCTYPE html>
   .header::before {
     content: '';
     position: absolute;
-    top: -60%; right: -20%;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+    top: 0; right: 0;
+    width: 0; height: 0;
+    background: transparent;
     border-radius: 50%;
   }
 
   .header::after {
     content: '';
     position: absolute;
-    bottom: -50%; left: -10%;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(48, 120, 80, 0.1) 0%, transparent 70%);
+    bottom: 0; left: 0;
+    width: 0; height: 0;
+    background: transparent;
     border-radius: 50%;
   }
 
@@ -1624,18 +1622,18 @@ HTML = r'''<!DOCTYPE html>
 
   .header h1 {
     font-size: 28px;
-    color: white;
+    color: #333;
     font-weight: 900;
     margin-bottom: 4px;
     position: relative;
     z-index: 2;
     letter-spacing: -0.5px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-shadow: none;
   }
 
   .header p {
     font-size: 13px;
-    color: rgba(255,255,255,0.85);
+    color: #888;
     margin-top: 4px;
     font-weight: 500;
     position: relative;
@@ -1657,8 +1655,8 @@ HTML = r'''<!DOCTYPE html>
   /* タブ */
   .tabs {
     display: flex;
-    border-bottom: 2px solid #e0f0ea;
-    background: linear-gradient(90deg, #f5faf8 0%, #eff8f5 100%);
+    border-bottom: 1px solid #e8e8e8;
+    background: white;
     padding: 0 8px;
   }
 
@@ -1708,7 +1706,7 @@ HTML = r'''<!DOCTYPE html>
     color: #5fa972;
     margin-bottom: 14px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #d0e8e0;
+    border-bottom: 2px solid #e8e8e8;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -1891,13 +1889,13 @@ HTML = r'''<!DOCTYPE html>
     width: 100%;
     height: 260px;
     padding: 14px;
-    border: 2px solid #d0e8e0;
+    border: 2px solid #d8d8d8;
     border-radius: 14px;
     font-size: 13px;
     font-family: 'Courier New', monospace;
     resize: vertical;
     transition: all 0.3s ease;
-    background: linear-gradient(135deg, #f5faf8 0%, #f0f8f5 100%);
+    background: white;
   }
 
   .pl-textarea:focus {
@@ -2031,13 +2029,13 @@ HTML = r'''<!DOCTYPE html>
 
   .pl-table td {
     padding: 8px 12px;
-    border-bottom: 1px solid #e0f0ea;
+    border-bottom: 1px solid #e8e8e8;
   }
 
   .pl-table tr:last-child td { border-bottom: none; }
 
   .pl-table .subtotal td {
-    background: #f0f8f5;
+    background: #f5f5f5;
     font-weight: 600;
   }
 
@@ -2065,12 +2063,12 @@ HTML = r'''<!DOCTYPE html>
 
   /* 銀行突合 */
   .bank-match {
-    background: linear-gradient(135deg, #e8f5f0, #dff3eb);
-    border: 1px solid #c8dfe8;
+    background: white;
+    border: 1px solid #e0e0e0;
     border-radius: 14px;
     padding: 18px;
     margin-bottom: 22px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
   }
 
   .bank-match h4 {
@@ -2085,7 +2083,7 @@ HTML = r'''<!DOCTYPE html>
     justify-content: space-between;
     font-size: 13px;
     padding: 6px 0;
-    border-bottom: 1px solid #d0e8e0;
+    border-bottom: 1px solid #e8e8e8;
   }
 
   .match-row:last-child { border-bottom: none; }
@@ -2094,10 +2092,10 @@ HTML = r'''<!DOCTYPE html>
   .advice-box {
     border-radius: 14px;
     padding: 16px;
-    background: linear-gradient(135deg, #f5faf8, #f0f8f5);
+    background: white;
     margin-bottom: 10px;
     border-left: 4px solid #7ac97f;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     transition: all 0.3s ease;
   }
 
@@ -2131,11 +2129,11 @@ HTML = r'''<!DOCTYPE html>
     display: flex;
     align-items: center;
     gap: 8px;
-    background: linear-gradient(135deg, #e8f5f0, #dff3eb);
+    background: #f8f8f8;
     padding: 10px 14px;
     border-radius: 12px;
     font-weight: 500;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     transition: all 0.3s ease;
   }
 
