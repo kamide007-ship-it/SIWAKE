@@ -1544,33 +1544,49 @@ HTML = r'''<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>E-MIETA仕訳EXCEL | スマート経営管理</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%232d7a4a' width='100' height='100'/><text x='50' y='65' font-size='60' font-weight='bold' fill='%23a0d995' text-anchor='middle' font-family='Arial'>E</text></svg>">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-  @keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
+  @keyframes sway { 0%, 100% { transform: translateX(-2px) rotate(0deg); } 50% { transform: translateX(2px) rotate(0.5deg); } }
+  @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
 
   body {
     font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
-    background: linear-gradient(135deg, #f5e6f3 0%, #e6f5f8 50%, #f0e6f8 100%);
+    background: linear-gradient(180deg, #d4efed 0%, #b8e0dc 30%, #a0d995 60%, #8ecf88 100%);
     min-height: 100vh; display: flex; align-items: flex-start;
     justify-content: center; padding: 30px 20px;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(circle at 20% 80%, rgba(57, 159, 93, 0.1) 0%, transparent 40%),
+      radial-gradient(circle at 80% 20%, rgba(30, 90, 122, 0.08) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: -1;
   }
 
   .container {
-    background: white;
+    background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(240,248,245,0.98) 100%);
     border-radius: 28px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05);
+    box-shadow: 0 20px 60px rgba(45, 122, 74, 0.12), 0 0 0 1px rgba(45, 122, 74, 0.08);
     width: 100%;
     max-width: 720px;
     overflow: hidden;
     animation: fadeIn 0.5s ease-out;
+    position: relative;
   }
 
   .header {
-    background: linear-gradient(135deg, #d8bfd8 0%, #c8e6f5 50%, #dfc8f0 100%);
-    padding: 32px 36px;
+    background: linear-gradient(135deg, #2d7a4a 0%, #3a9f5d 50%, #1e5a7a 100%);
+    background-size: 200% 200%;
+    padding: 40px 36px 32px;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -1579,35 +1595,69 @@ HTML = r'''<!DOCTYPE html>
   .header::before {
     content: '';
     position: absolute;
-    top: -50%; right: -10%;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+    top: -60%; right: -20%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
     border-radius: 50%;
   }
 
-  .header h1 {
-    font-size: 26px;
-    color: #5a3d7a;
-    font-weight: 800;
-    margin-bottom: 6px;
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -50%; left: -10%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(48, 120, 80, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .logo-container {
     position: relative;
-    z-index: 1;
+    z-index: 2;
+    margin-bottom: 12px;
+  }
+
+  .logo-svg {
+    height: 60px;
+    width: auto;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  }
+
+  .header h1 {
+    font-size: 28px;
+    color: white;
+    font-weight: 900;
+    margin-bottom: 4px;
+    position: relative;
+    z-index: 2;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
 
   .header p {
     font-size: 13px;
-    color: #7a5a9a;
+    color: rgba(255,255,255,0.85);
     margin-top: 4px;
     font-weight: 500;
     position: relative;
+    z-index: 2;
+  }
+
+  .character-corner {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    height: 80px;
+    width: auto;
+    opacity: 0.7;
+    animation: sway 3s ease-in-out infinite;
     z-index: 1;
   }
 
   /* タブ */
   .tabs {
     display: flex;
-    border-bottom: 2px solid #f0e6f8;
-    background: #faf8fc;
+    border-bottom: 2px solid #e0f0ea;
+    background: linear-gradient(90deg, #f5faf8 0%, #eff8f5 100%);
     padding: 0 8px;
   }
 
@@ -1618,18 +1668,18 @@ HTML = r'''<!DOCTYPE html>
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    color: #9a8aaa;
+    color: #5a8a76;
     border-bottom: 3px solid transparent;
     margin-bottom: -2px;
     transition: all 0.3s ease;
     position: relative;
   }
 
-  .tab:hover { color: #7a5a9a; }
+  .tab:hover { color: #2d7a4a; }
 
   .tab.active {
-    color: #d8479f;
-    border-bottom-color: #d8479f;
+    color: #3a9f5d;
+    border-bottom-color: #3a9f5d;
     background: white;
   }
 
@@ -1654,37 +1704,37 @@ HTML = r'''<!DOCTYPE html>
   .section-title {
     font-size: 15px;
     font-weight: 700;
-    color: #5a3d7a;
+    color: #2d7a4a;
     margin-bottom: 14px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #f0e6f8;
+    border-bottom: 2px solid #d0e8e0;
     display: flex;
     align-items: center;
     gap: 8px;
   }
 
   .upload-area {
-    border: 2.5px dashed #dcc8e8;
+    border: 2.5px dashed #a0d995;
     border-radius: 18px;
     padding: 32px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: linear-gradient(135deg, #faf8fc 0%, #f5f0fa 100%);
+    background: linear-gradient(135deg, #f0faf7 0%, #e8f5f0 100%);
     margin-bottom: 18px;
     position: relative;
   }
 
   .upload-area:hover {
-    border-color: #d8479f;
-    background: linear-gradient(135deg, #fef5fb 0%, #f8ecfb 100%);
+    border-color: #3a9f5d;
+    background: linear-gradient(135deg, #e8f8f3 0%, #dff3eb 100%);
     transform: translateY(-2px);
   }
 
   .upload-area.drag {
-    border-color: #d8479f;
-    background: linear-gradient(135deg, #fef5fb 0%, #f8ecfb 100%);
-    box-shadow: 0 8px 20px rgba(216, 71, 159, 0.15);
+    border-color: #3a9f5d;
+    background: linear-gradient(135deg, #e8f8f3 0%, #dff3eb 100%);
+    box-shadow: 0 8px 20px rgba(58, 159, 93, 0.15);
   }
 
   .upload-area input[type=file] {
@@ -1702,18 +1752,18 @@ HTML = r'''<!DOCTYPE html>
 
   .upload-text {
     font-size: 15px;
-    color: #5a3d7a;
+    color: #2d7a4a;
     font-weight: 600;
   }
 
   .upload-sub {
     font-size: 12px;
-    color: #a08ab8;
+    color: #6a9a82;
     margin-top: 6px;
   }
 
   .file-info {
-    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    background: linear-gradient(135deg, #d0f0d8 0%, #b8e6c8 100%);
     border-radius: 12px;
     padding: 12px 16px;
     display: none;
@@ -1721,7 +1771,7 @@ HTML = r'''<!DOCTYPE html>
     gap: 10px;
     margin-bottom: 16px;
     font-size: 13px;
-    color: #2e7d32;
+    color: #1f5a38;
     font-weight: 600;
   }
 
@@ -1730,7 +1780,7 @@ HTML = r'''<!DOCTYPE html>
   .btn {
     width: 100%;
     padding: 16px;
-    background: linear-gradient(135deg, #d8479f, #e876b8);
+    background: linear-gradient(135deg, #3a9f5d, #4fb573);
     color: white;
     border: none;
     border-radius: 14px;
@@ -1738,12 +1788,12 @@ HTML = r'''<!DOCTYPE html>
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(216, 71, 159, 0.2);
+    box-shadow: 0 4px 15px rgba(58, 159, 93, 0.25);
   }
 
   .btn:hover:not(:disabled) {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(216, 71, 159, 0.35);
+    box-shadow: 0 8px 25px rgba(58, 159, 93, 0.35);
   }
 
   .btn:active:not(:disabled) { transform: translateY(-1px); }
@@ -1755,18 +1805,18 @@ HTML = r'''<!DOCTYPE html>
   }
 
   .btn-eval {
-    background: linear-gradient(135deg, #72c48f, #8dd9a3);
-    box-shadow: 0 4px 15px rgba(114, 196, 143, 0.2);
+    background: linear-gradient(135deg, #1e5a7a, #2d7a9a);
+    box-shadow: 0 4px 15px rgba(30, 90, 122, 0.25);
   }
 
   .btn-eval:hover:not(:disabled) {
-    box-shadow: 0 8px 25px rgba(114, 196, 143, 0.35);
+    box-shadow: 0 8px 25px rgba(30, 90, 122, 0.35);
   }
 
   .progress {
     display: none;
     margin-top: 18px;
-    background: #f0e6f8;
+    background: #d0e8e0;
     border-radius: 100px;
     height: 8px;
     overflow: hidden;
@@ -1777,16 +1827,16 @@ HTML = r'''<!DOCTYPE html>
   .progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #d8479f, #e876b8, #72c48f);
+    background: linear-gradient(90deg, #3a9f5d, #4fb573, #1e5a7a);
     border-radius: 100px;
     transition: width 0.3s ease;
-    box-shadow: 0 0 10px rgba(216, 71, 159, 0.4);
+    box-shadow: 0 0 10px rgba(58, 159, 93, 0.4);
   }
 
   .status {
     text-align: center;
     font-size: 13px;
-    color: #7a5a9a;
+    color: #5a8a76;
     margin-top: 12px;
     min-height: 20px;
     font-weight: 500;
@@ -1795,7 +1845,7 @@ HTML = r'''<!DOCTYPE html>
   .result {
     display: none;
     margin-top: 20px;
-    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    background: linear-gradient(135deg, #d0f0d8, #b8e6c8);
     border-radius: 16px;
     padding: 24px;
     text-align: center;
@@ -1806,20 +1856,20 @@ HTML = r'''<!DOCTYPE html>
   .dl-btn {
     display: inline-block;
     padding: 14px 32px;
-    background: linear-gradient(135deg, #72c48f, #8dd9a3);
+    background: linear-gradient(135deg, #3a9f5d, #4fb573);
     color: white;
     border-radius: 12px;
     text-decoration: none;
     font-weight: 700;
     font-size: 15px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(114, 196, 143, 0.2);
+    box-shadow: 0 4px 15px rgba(58, 159, 93, 0.25);
   }
 
   .dl-btn:hover {
-    background: linear-gradient(135deg, #63b37f, #7ec894);
+    background: linear-gradient(135deg, #2d8850, #3fa065);
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(114, 196, 143, 0.35);
+    box-shadow: 0 8px 25px rgba(58, 159, 93, 0.35);
   }
 
   .error-msg {
@@ -1840,24 +1890,24 @@ HTML = r'''<!DOCTYPE html>
     width: 100%;
     height: 260px;
     padding: 14px;
-    border: 2px solid #e6dde8;
+    border: 2px solid #d0e8e0;
     border-radius: 14px;
     font-size: 13px;
     font-family: 'Courier New', monospace;
     resize: vertical;
     transition: all 0.3s ease;
-    background: linear-gradient(135deg, #faf8fc 0%, #f5f0fa 100%);
+    background: linear-gradient(135deg, #f5faf8 0%, #f0f8f5 100%);
   }
 
   .pl-textarea:focus {
     outline: none;
-    border-color: #d8479f;
-    box-shadow: 0 0 0 3px rgba(216, 71, 159, 0.1);
+    border-color: #3a9f5d;
+    box-shadow: 0 0 0 3px rgba(58, 159, 93, 0.1);
   }
 
   .hint {
     font-size: 12px;
-    color: #a08ab8;
+    color: #6a9a82;
     margin-top: 8px;
     margin-bottom: 16px;
     font-weight: 500;
@@ -1875,10 +1925,10 @@ HTML = r'''<!DOCTYPE html>
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   }
 
-  .verdict-excellent { background: linear-gradient(135deg, #e8f5e9, #b9f6ca); border: 2px solid #2e7d32; }
-  .verdict-good      { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border: 2px solid #388e3c; }
-  .verdict-ok        { background: linear-gradient(135deg, #fffde7, #fff9c4); border: 2px solid #f9a825; }
-  .verdict-warn      { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border: 2px solid #ef6c00; }
+  .verdict-excellent { background: linear-gradient(135deg, #d0f0d8, #9dd9b8); border: 2px solid #2d7a4a; }
+  .verdict-good      { background: linear-gradient(135deg, #d0f0d8, #b8e6c8); border: 2px solid #388e3c; }
+  .verdict-ok        { background: linear-gradient(135deg, #fff8d8, #fff0a8); border: 2px solid #f9a825; }
+  .verdict-warn      { background: linear-gradient(135deg, #ffe8c8, #ffd9a8); border: 2px solid #ef6c00; }
   .verdict-bad       { background: linear-gradient(135deg, #ffebee, #ffcdd2); border: 2px solid #c62828; }
 
   .verdict-label {
@@ -1917,14 +1967,14 @@ HTML = r'''<!DOCTYPE html>
 
   .kpi-card:hover { transform: translateY(-2px); }
 
-  .kpi-card.GOOD { background: linear-gradient(135deg, #e8f5e9, #d4f0da); border-left: 5px solid #2e7d32; }
-  .kpi-card.OK   { background: linear-gradient(135deg, #fff8e1, #fffbee); border-left: 5px solid #f9a825; }
-  .kpi-card.WARN { background: linear-gradient(135deg, #fff3e0, #fff9f0); border-left: 5px solid #ef6c00; }
-  .kpi-card.BAD  { background: linear-gradient(135deg, #ffebee, #ffe8ec); border-left: 5px solid #c62828; }
+  .kpi-card.GOOD { background: linear-gradient(135deg, #d0f0d8, #b8e6c8); border-left: 5px solid #2d7a4a; }
+  .kpi-card.OK   { background: linear-gradient(135deg, #fff8d8, #fff0a8); border-left: 5px solid #f9a825; }
+  .kpi-card.WARN { background: linear-gradient(135deg, #ffe8c8, #ffd9a8); border-left: 5px solid #ef6c00; }
+  .kpi-card.BAD  { background: linear-gradient(135deg, #ffebee, #ffcdd2); border-left: 5px solid #c62828; }
 
   .kpi-name  {
     font-size: 12px;
-    color: #666;
+    color: #556;
     margin-bottom: 6px;
     font-weight: 500;
   }
@@ -1934,7 +1984,7 @@ HTML = r'''<!DOCTYPE html>
     font-weight: 800;
   }
 
-  .kpi-value.GOOD { color: #2e7d32; }
+  .kpi-value.GOOD { color: #2d7a4a; }
   .kpi-value.OK   { color: #f9a825; }
   .kpi-value.WARN { color: #ef6c00; }
   .kpi-value.BAD  { color: #c62828; }
@@ -1954,7 +2004,7 @@ HTML = r'''<!DOCTYPE html>
     float: right;
   }
 
-  .kpi-badge.GOOD { background: #2e7d32; color: white; }
+  .kpi-badge.GOOD { background: #2d7a4a; color: white; }
   .kpi-badge.OK   { background: #f9a825; color: white; }
   .kpi-badge.WARN { background: #ef6c00; color: white; }
   .kpi-badge.BAD  { background: #c62828; color: white; }
@@ -1971,7 +2021,7 @@ HTML = r'''<!DOCTYPE html>
   }
 
   .pl-table th {
-    background: linear-gradient(135deg, #d8479f, #e876b8);
+    background: linear-gradient(135deg, #2d7a4a, #3a9f5d);
     color: white;
     padding: 10px 12px;
     text-align: left;
@@ -1980,20 +2030,20 @@ HTML = r'''<!DOCTYPE html>
 
   .pl-table td {
     padding: 8px 12px;
-    border-bottom: 1px solid #f0e6f8;
+    border-bottom: 1px solid #e0f0ea;
   }
 
   .pl-table tr:last-child td { border-bottom: none; }
 
   .pl-table .subtotal td {
-    background: #f5f0fa;
+    background: #f0f8f5;
     font-weight: 600;
   }
 
   .pl-table .profit td {
-    background: linear-gradient(135deg, #e8f5e9, #d4f0da);
+    background: linear-gradient(135deg, #d0f0d8, #b8e6c8);
     font-weight: 700;
-    color: #1b5e20;
+    color: #1f5a38;
   }
 
   .pl-table .profit-neg td {
@@ -2014,8 +2064,8 @@ HTML = r'''<!DOCTYPE html>
 
   /* 銀行突合 */
   .bank-match {
-    background: linear-gradient(135deg, #f0f7ff, #eff5fb);
-    border: 1px solid #dce8f5;
+    background: linear-gradient(135deg, #e8f5f0, #dff3eb);
+    border: 1px solid #c8dfe8;
     border-radius: 14px;
     padding: 18px;
     margin-bottom: 22px;
@@ -2025,7 +2075,7 @@ HTML = r'''<!DOCTYPE html>
   .bank-match h4 {
     font-size: 14px;
     font-weight: 700;
-    color: #5a7a9a;
+    color: #2d7a4a;
     margin-bottom: 12px;
   }
 
@@ -2034,7 +2084,7 @@ HTML = r'''<!DOCTYPE html>
     justify-content: space-between;
     font-size: 13px;
     padding: 6px 0;
-    border-bottom: 1px solid #f0e6f8;
+    border-bottom: 1px solid #d0e8e0;
   }
 
   .match-row:last-child { border-bottom: none; }
@@ -2043,9 +2093,9 @@ HTML = r'''<!DOCTYPE html>
   .advice-box {
     border-radius: 14px;
     padding: 16px;
-    background: linear-gradient(135deg, #faf8fc, #f5f0fa);
+    background: linear-gradient(135deg, #f5faf8, #f0f8f5);
     margin-bottom: 10px;
-    border-left: 4px solid #d8479f;
+    border-left: 4px solid #3a9f5d;
     box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     transition: all 0.3s ease;
   }
@@ -2055,7 +2105,7 @@ HTML = r'''<!DOCTYPE html>
   .advice-title {
     font-size: 13px;
     font-weight: 700;
-    color: #5a3d7a;
+    color: #2d7a4a;
     margin-bottom: 6px;
   }
 
@@ -2076,11 +2126,11 @@ HTML = r'''<!DOCTYPE html>
 
   .feature {
     font-size: 13px;
-    color: #5a3d7a;
+    color: #2d7a4a;
     display: flex;
     align-items: center;
     gap: 8px;
-    background: linear-gradient(135deg, #f5e6f8, #e6f5f8);
+    background: linear-gradient(135deg, #e8f5f0, #dff3eb);
     padding: 10px 14px;
     border-radius: 12px;
     font-weight: 500;
@@ -2097,8 +2147,45 @@ HTML = r'''<!DOCTYPE html>
 <body>
 <div class="container">
   <div class="header">
-    <h1>✨ E-MIETA仕訳EXCEL</h1>
-    <p>スマート経営分析 × 自動Excel生成</p>
+    <!-- ロゴ -->
+    <div class="logo-container">
+      <svg class="logo-svg" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+        <!-- 森のイメージ背景 -->
+        <g opacity="0.1">
+          <path d="M20 40 Q30 20 40 40 Q50 20 60 40" stroke="white" stroke-width="2" fill="none"/>
+          <path d="M120 40 Q130 20 140 40 Q150 20 160 40" stroke="white" stroke-width="2" fill="none"/>
+        </g>
+        <!-- E-MIETAテキスト -->
+        <text x="100" y="45" font-size="36" font-weight="900" fill="white" text-anchor="middle" font-family="Arial, sans-serif">E-MIETA</text>
+      </svg>
+    </div>
+
+    <h1>経営管理システム</h1>
+    <p>🌲 スマート仕訳Excel × 森の中の経営診断</p>
+
+    <!-- SAMO キャラクター -->
+    <svg class="character-corner" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+      <!-- 体 -->
+      <ellipse cx="30" cy="50" rx="15" ry="20" fill="#8ecf88"/>
+      <!-- 頭 -->
+      <circle cx="30" cy="25" r="12" fill="#8ecf88"/>
+      <!-- 耳 -->
+      <circle cx="20" cy="18" r="5" fill="#8ecf88"/>
+      <circle cx="40" cy="18" r="5" fill="#8ecf88"/>
+      <!-- 目 -->
+      <circle cx="26" cy="23" r="2" fill="white"/>
+      <circle cx="34" cy="23" r="2" fill="white"/>
+      <circle cx="26" cy="23" r="1" fill="#000"/>
+      <circle cx="34" cy="23" r="1" fill="#000"/>
+      <!-- 笑み -->
+      <path d="M28 28 Q30 30 32 28" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <!-- 手 -->
+      <circle cx="18" cy="45" r="4" fill="#7ac97f"/>
+      <circle cx="42" cy="45" r="4" fill="#7ac97f"/>
+      <!-- 足 -->
+      <rect x="24" y="68" width="4" height="8" fill="#6ab972" rx="2"/>
+      <rect x="32" y="68" width="4" height="8" fill="#6ab972" rx="2"/>
+    </svg>
   </div>
 
   <div class="tabs">
