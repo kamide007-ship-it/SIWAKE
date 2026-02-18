@@ -1675,13 +1675,85 @@ HTML = r'''<!DOCTYPE html>
   }
 
   .tab-icon {
-    font-size: 20px;
+    width: 24px;
+    height: 24px;
     display: block;
-    margin-bottom: 4px;
+    margin: 0 auto 4px;
     transition: transform 0.3s ease;
+    stroke: currentColor;
+    color: inherit;
   }
 
   .tab.active .tab-icon { transform: scale(1.15); }
+
+  .section-icon {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    margin-right: 6px;
+    vertical-align: -3px;
+    stroke: currentColor;
+    color: inherit;
+  }
+
+  .feature-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: -3px;
+    stroke: currentColor;
+    color: inherit;
+  }
+
+  .upload-icon {
+    width: 48px;
+    height: 48px;
+    display: block;
+    margin: 0 auto 8px;
+    stroke: #5fa972;
+    color: #5fa972;
+  }
+
+  .check-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 6px;
+    vertical-align: -2px;
+    stroke: #5fa972;
+    color: #5fa972;
+  }
+
+  .hint-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin-right: 4px;
+    vertical-align: -2px;
+    stroke: #ffa500;
+    color: #ffa500;
+  }
+
+  .btn-icon {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    margin-right: 6px;
+    vertical-align: -3px;
+    stroke: currentColor;
+    color: currentColor;
+  }
+
+  .btn-icon-sm {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin-right: 4px;
+    vertical-align: -2px;
+    stroke: currentColor;
+    color: currentColor;
+  }
 
   .panel {
     display: none;
@@ -2150,44 +2222,44 @@ HTML = r'''<!DOCTYPE html>
 
   <div class="tabs">
     <div class="tab active" onclick="switchTab('excel')">
-      <span class="tab-icon">📊</span><span>CSV変換</span>
+      <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"></line><path d="M17 5H9.5a1.5 1.5 0 0 0-1.5 1.5v12a1.5 1.5 0 0 0 1.5 1.5H17"></path><path d="M6 12H2m20 0h-4"></path></svg><span>CSV変換</span>
     </div>
     <div class="tab" onclick="switchTab('eval')">
-      <span class="tab-icon">🔍</span><span>経営分析</span>
+      <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg><span>経営分析</span>
     </div>
   </div>
 
   <!-- ===== TAB1: Excel変換 ===== -->
   <div class="panel active" id="panel-excel">
     <div class="features">
-      <div class="feature"><span>📅</span> 月別自動振分け</div>
-      <div class="feature"><span>🏷️</span> 科目自動判定</div>
-      <div class="feature"><span>💰</span> 数式計算対応</div>
-      <div class="feature"><span>📊</span> 集計シート生成</div>
+      <div class="feature"><svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> 月別自動振分け</div>
+      <div class="feature"><svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg> 科目自動判定</div>
+      <div class="feature"><svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10m-3-3h6"></path></svg> 数式計算対応</div>
+      <div class="feature"><svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"></line><path d="M17 5H9.5a1.5 1.5 0 0 0-1.5 1.5v12a1.5 1.5 0 0 0 1.5 1.5H17"></path><path d="M6 12H2m20 0h-4"></path></svg> 集計シート生成</div>
     </div>
 
-    <div class="section-title">📄 銀行明細CSVをアップロード</div>
+    <div class="section-title"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg> 銀行明細CSVをアップロード</div>
     <div class="upload-area" id="dropZone">
       <input type="file" id="fileInput" accept=".csv">
-      <div class="upload-icon">📥</div>
+      <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
       <div class="upload-text">CSVファイルをここにドロップ</div>
       <div class="upload-sub">またはクリックして選択（Shift-JIS/UTF-8 自動判定）</div>
     </div>
-    <div class="file-info" id="fileInfo"><span>✓</span><span id="fileName"></span></div>
-    <button class="btn" id="convertBtn" disabled onclick="convert()">🚀 Excelを生成する</button>
+    <div class="file-info" id="fileInfo"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span id="fileName"></span></div>
+    <button class="btn" id="convertBtn" disabled onclick="convert()">✈️ Excelを生成する</button>
     <div class="progress" id="progress"><div class="progress-bar" id="progressBar"></div></div>
     <div class="status" id="status"></div>
     <div class="error-msg" id="errorMsg"></div>
     <div class="result" id="result">
-      <div style="font-size:48px;margin-bottom:12px">🎉</div>
+      <div style="font-size:48px;margin-bottom:12px">✅</div>
       <div style="font-weight:700;font-size:17px;color:#1b5e20;margin-bottom:4px">Excel生成完了！</div>
       <div style="font-size:12px;color:#666;margin-bottom:16px">すぐにダウンロードできます</div>
-      <a id="dlLink" class="dl-btn" href="#" download>📥 Excelをダウンロード</a>
+      <a id="dlLink" class="dl-btn" href="#" download"><svg class="btn-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Excelをダウンロード</a>
     </div>
 
     <!-- 使い方ガイド -->
     <div style="margin-top:28px; padding-top:28px; border-top: 2px solid #f0e6f8;">
-      <div class="section-title">💡 CSV変換の使い方</div>
+      <div class="section-title"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> CSV変換の使い方</div>
       <div class="advice-box">
         <div class="advice-title">【ステップ1】対応するCSV形式を確認</div>
         <div class="advice-text">
@@ -2206,9 +2278,9 @@ HTML = r'''<!DOCTYPE html>
         <div class="advice-title">【ステップ3】Excel生成ボタンをクリック</div>
         <div class="advice-text">
           「Excelを生成する」ボタンをクリックすると、以下が自動生成されます：<br>
-          • 📊 年間サマリーシート（月別集計）<br>
-          • 📋 各月シート（月別詳細明細）<br>
-          • 🏷️ カテゴリ別集計シート
+          • 年間サマリーシート（月別集計）<br>
+          • 各月シート（月別詳細明細）<br>
+          • カテゴリ別集計シート
         </div>
       </div>
       <div class="advice-box">
@@ -2222,7 +2294,7 @@ HTML = r'''<!DOCTYPE html>
 
   <!-- ===== TAB2: 経営分析 ===== -->
   <div class="panel" id="panel-eval">
-    <div class="section-title">📋 月次P&L内訳を貼り付け</div>
+    <div class="section-title"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg> 月次P&L内訳を貼り付け</div>
     <textarea class="pl-textarea" id="plText" placeholder="例：
 2026年 2月
 売上　13,416,660
@@ -2233,18 +2305,18 @@ HTML = r'''<!DOCTYPE html>
 交際費　　　17,000
 旅費交通費　250,000
 （以下つづき...）"></textarea>
-    <div class="hint">💡 会計ソフトなどからP&Lをコピペするだけで分析できます</div>
+    <div class="hint"><svg class="hint-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 会計ソフトなどからP&Lをコピペするだけで分析できます</div>
 
-    <div class="section-title" style="margin-top:20px">🏦 銀行明細CSV（オプション）</div>
+    <div class="section-title" style="margin-top:20px"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10m-3-3h6"></path></svg> 銀行明細CSV（オプション）</div>
     <div class="upload-area" id="dropZone2">
       <input type="file" id="fileInput2" accept=".csv">
-      <div class="upload-icon">📤</div>
+      <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
       <div class="upload-text">CSVをドロップ（省略可）</div>
       <div class="upload-sub">入力すると銀行残高と自動照合します</div>
     </div>
-    <div class="file-info" id="fileInfo2"><span>✓</span><span id="fileName2"></span></div>
+    <div class="file-info" id="fileInfo2"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span id="fileName2"></span></div>
 
-    <button class="btn btn-eval" id="evalBtn" onclick="evaluate()">🔍 経営分析を実行</button>
+    <button class="btn btn-eval" id="evalBtn" onclick="evaluate()"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg> 経営分析を実行</button>
     <div class="progress" id="progress2"><div class="progress-bar" id="progressBar2"></div></div>
     <div class="status" id="status2"></div>
     <div class="error-msg" id="errorMsg2"></div>
@@ -2254,7 +2326,7 @@ HTML = r'''<!DOCTYPE html>
 
     <!-- 使い方ガイド -->
     <div style="margin-top:28px; padding-top:28px; border-top: 2px solid #f0e6f8;">
-      <div class="section-title">💡 経営分析の使い方</div>
+      <div class="section-title"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 経営分析の使い方</div>
       <div class="advice-box">
         <div class="advice-title">【分析結果の見方】総合スコア</div>
         <div class="advice-text">
@@ -2447,7 +2519,7 @@ function renderEvalResult(d) {
 
   // P&L表
   html += `
-  <div class="section-title">📋 損益計算書（簡易）</div>
+  <div class="section-title"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg> 損益計算書（簡易）</div>
   <table class="pl-table">
     <tr><th>項目</th><th class="right">金額</th><th class="right">売上比</th></tr>
     <tr><td>売上</td><td class="right">${fmt(d.revenue)}</td><td class="right ratio">100.0%</td></tr>
@@ -2465,7 +2537,7 @@ function renderEvalResult(d) {
   if (d.bank_summary) {
     const b = d.bank_summary;
     html += `
-  <div class="section-title">🏦 銀行データとの照合</div>
+  <div class="section-title"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10m-3-3h6"></path></svg> 銀行データとの照合</div>
   <div class="bank-match">
     <h4>対象月: ${d.period}　（${b.count}件）</h4>
     <div class="match-row"><span>銀行入金合計</span><span style="font-weight:600">${fmt(b.bank_in)}</span></div>
@@ -2478,7 +2550,7 @@ function renderEvalResult(d) {
 
   // 費用明細
   html += `
-  <div class="section-title">📂 費用内訳（全科目）</div>
+  <div class="section-title"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> 費用内訳（全科目）</div>
   <table class="pl-table">
     <tr><th>科目</th><th class="right">金額</th><th class="right">売上比</th></tr>`;
   for (const [k, v] of Object.entries(d.items).sort((a,b)=>b[1]-a[1])) {
@@ -2487,7 +2559,7 @@ function renderEvalResult(d) {
   html += `</table>`;
 
   // アドバイス
-  html += `<div class="section-title">💡 改善アドバイス</div>`;
+  html += `<div class="section-title"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 改善アドバイス</div>`;
   for (const [title, text] of d.advice) {
     html += `<div class="advice-box"><div class="advice-title">【${title}】</div><div class="advice-text">${text}</div></div>`;
   }
