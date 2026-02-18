@@ -1544,7 +1544,7 @@ HTML = r'''<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>E-MIETA・銀行仕訳 | スマート仕訳EXCEL×MIETA経営健康診断</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'><defs><style>.favicon-text { font-family: Arial, sans-serif; font-weight: 900; font-size: 72px; text-anchor: middle; }</style></defs><rect fill='%233a9f5d' width='128' height='128' rx='20'/><text x='64' y='95' class='favicon-text' fill='%231e5a7a'>E</text><text x='64' y='95' class='favicon-text' fill='none' stroke='%23ffffff' stroke-width='1.5' opacity='0.4'>E</text></svg>">
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -2150,12 +2150,7 @@ HTML = r'''<!DOCTYPE html>
   <div class="header">
     <!-- ロゴ -->
     <div class="logo-container">
-      <svg class="logo-svg" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
-        <!-- E-MIETAテキスト（ネイビー色） -->
-        <text x="100" y="48" font-size="40" font-weight="900" fill="#4a9fc8" text-anchor="middle" font-family="Arial, sans-serif">E-MIETA</text>
-        <!-- テキストの背景グロー効果 -->
-        <text x="100" y="48" font-size="40" font-weight="900" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" text-anchor="middle" font-family="Arial, sans-serif">E-MIETA</text>
-      </svg>
+      <img src="/static/logo.svg" alt="E-MIETA Logo" class="logo-svg">
     </div>
 
     <h1>E-MIETA・銀行仕訳</h1>
@@ -2182,8 +2177,8 @@ HTML = r'''<!DOCTYPE html>
       <!-- 笑み -->
       <path d="M32 33 Q35 35 38 33" stroke="#4a9fc8" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.8"/>
       <!-- 頬 -->
-      <circle cx="24" cy="31" r="2" fill="#4fb573" opacity="0.5"/>
-      <circle cx="46" cy="31" r="2" fill="#4fb573" opacity="0.5"/>
+      <circle cx="24" cy="31" r="2" fill="#8ecf88" opacity="0.5"/>
+      <circle cx="46" cy="31" r="2" fill="#8ecf88" opacity="0.5"/>
       <!-- 手 -->
       <circle cx="20" cy="50" r="5" fill="#5fa972" opacity="0.85"/>
       <circle cx="50" cy="50" r="5" fill="#5fa972" opacity="0.85"/>
