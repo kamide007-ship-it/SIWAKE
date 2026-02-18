@@ -1544,7 +1544,7 @@ HTML = r'''<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>E-MIETA・銀行仕訳 | スマート仕訳EXCEL×MIETA経営健康診断</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%232d7a4a' width='100' height='100'/><text x='50' y='65' font-size='60' font-weight='bold' fill='%23a0d995' text-anchor='middle' font-family='Arial'>E</text></svg>">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'><defs><style>.favicon-text { font-family: Arial, sans-serif; font-weight: 900; font-size: 72px; text-anchor: middle; }</style></defs><rect fill='%233a9f5d' width='128' height='128' rx='20'/><text x='64' y='95' class='favicon-text' fill='%231e5a7a'>E</text><text x='64' y='95' class='favicon-text' fill='none' stroke='%23ffffff' stroke-width='1.5' opacity='0.4'>E</text></svg>">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1555,7 +1555,7 @@ HTML = r'''<!DOCTYPE html>
 
   body {
     font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
-    background: linear-gradient(180deg, #d4efed 0%, #b8e0dc 30%, #a0d995 60%, #8ecf88 100%);
+    background: linear-gradient(180deg, #e0f7fa 0%, #c8eef5 40%, #a8e6d4 100%);
     min-height: 100vh; display: flex; align-items: flex-start;
     justify-content: center; padding: 30px 20px;
     position: relative;
@@ -1584,7 +1584,7 @@ HTML = r'''<!DOCTYPE html>
   }
 
   .header {
-    background: linear-gradient(135deg, #2d7a4a 0%, #3a9f5d 50%, #1e5a7a 100%);
+    background: linear-gradient(135deg, #80deea 0%, #a8e6d4 50%, #6ec8d6 100%);
     background-size: 200% 200%;
     padding: 40px 36px 32px;
     text-align: center;
@@ -1669,18 +1669,18 @@ HTML = r'''<!DOCTYPE html>
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    color: #5a8a76;
+    color: #5b9a83;
     border-bottom: 3px solid transparent;
     margin-bottom: -2px;
     transition: all 0.3s ease;
     position: relative;
   }
 
-  .tab:hover { color: #2d7a4a; }
+  .tab:hover { color: #5fa972; }
 
   .tab.active {
-    color: #3a9f5d;
-    border-bottom-color: #3a9f5d;
+    color: #7ac97f;
+    border-bottom-color: #7ac97f;
     background: white;
   }
 
@@ -1705,7 +1705,7 @@ HTML = r'''<!DOCTYPE html>
   .section-title {
     font-size: 15px;
     font-weight: 700;
-    color: #2d7a4a;
+    color: #5fa972;
     margin-bottom: 14px;
     padding-bottom: 8px;
     border-bottom: 2px solid #d0e8e0;
@@ -1715,7 +1715,7 @@ HTML = r'''<!DOCTYPE html>
   }
 
   .upload-area {
-    border: 2.5px dashed #a0d995;
+    border: 2.5px dashed #82c792;
     border-radius: 18px;
     padding: 32px;
     text-align: center;
@@ -1727,13 +1727,13 @@ HTML = r'''<!DOCTYPE html>
   }
 
   .upload-area:hover {
-    border-color: #3a9f5d;
+    border-color: #7ac97f;
     background: linear-gradient(135deg, #e8f8f3 0%, #dff3eb 100%);
     transform: translateY(-2px);
   }
 
   .upload-area.drag {
-    border-color: #3a9f5d;
+    border-color: #7ac97f;
     background: linear-gradient(135deg, #e8f8f3 0%, #dff3eb 100%);
     box-shadow: 0 8px 20px rgba(58, 159, 93, 0.15);
   }
@@ -1753,13 +1753,13 @@ HTML = r'''<!DOCTYPE html>
 
   .upload-text {
     font-size: 15px;
-    color: #2d7a4a;
+    color: #5fa972;
     font-weight: 600;
   }
 
   .upload-sub {
     font-size: 12px;
-    color: #6a9a82;
+    color: #6ba88a;
     margin-top: 6px;
   }
 
@@ -1781,7 +1781,7 @@ HTML = r'''<!DOCTYPE html>
   .btn {
     width: 100%;
     padding: 16px;
-    background: linear-gradient(135deg, #3a9f5d, #4fb573);
+    background: linear-gradient(135deg, #7ac97f, #4fb573);
     color: white;
     border: none;
     border-radius: 14px;
@@ -1806,7 +1806,7 @@ HTML = r'''<!DOCTYPE html>
   }
 
   .btn-eval {
-    background: linear-gradient(135deg, #1e5a7a, #2d7a9a);
+    background: linear-gradient(135deg, #4a9fc8, #2d7a9a);
     box-shadow: 0 4px 15px rgba(30, 90, 122, 0.25);
   }
 
@@ -1828,7 +1828,7 @@ HTML = r'''<!DOCTYPE html>
   .progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #3a9f5d, #4fb573, #1e5a7a);
+    background: linear-gradient(90deg, #7ac97f, #4fb573, #4a9fc8);
     border-radius: 100px;
     transition: width 0.3s ease;
     box-shadow: 0 0 10px rgba(58, 159, 93, 0.4);
@@ -1837,7 +1837,7 @@ HTML = r'''<!DOCTYPE html>
   .status {
     text-align: center;
     font-size: 13px;
-    color: #5a8a76;
+    color: #5b9a83;
     margin-top: 12px;
     min-height: 20px;
     font-weight: 500;
@@ -1857,7 +1857,7 @@ HTML = r'''<!DOCTYPE html>
   .dl-btn {
     display: inline-block;
     padding: 14px 32px;
-    background: linear-gradient(135deg, #3a9f5d, #4fb573);
+    background: linear-gradient(135deg, #7ac97f, #4fb573);
     color: white;
     border-radius: 12px;
     text-decoration: none;
@@ -1902,13 +1902,13 @@ HTML = r'''<!DOCTYPE html>
 
   .pl-textarea:focus {
     outline: none;
-    border-color: #3a9f5d;
+    border-color: #7ac97f;
     box-shadow: 0 0 0 3px rgba(58, 159, 93, 0.1);
   }
 
   .hint {
     font-size: 12px;
-    color: #6a9a82;
+    color: #6ba88a;
     margin-top: 8px;
     margin-bottom: 16px;
     font-weight: 500;
@@ -1926,7 +1926,7 @@ HTML = r'''<!DOCTYPE html>
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   }
 
-  .verdict-excellent { background: linear-gradient(135deg, #d0f0d8, #9dd9b8); border: 2px solid #2d7a4a; }
+  .verdict-excellent { background: linear-gradient(135deg, #d0f0d8, #9dd9b8); border: 2px solid #5fa972; }
   .verdict-good      { background: linear-gradient(135deg, #d0f0d8, #b8e6c8); border: 2px solid #388e3c; }
   .verdict-ok        { background: linear-gradient(135deg, #fff8d8, #fff0a8); border: 2px solid #f9a825; }
   .verdict-warn      { background: linear-gradient(135deg, #ffe8c8, #ffd9a8); border: 2px solid #ef6c00; }
@@ -1968,7 +1968,7 @@ HTML = r'''<!DOCTYPE html>
 
   .kpi-card:hover { transform: translateY(-2px); }
 
-  .kpi-card.GOOD { background: linear-gradient(135deg, #d0f0d8, #b8e6c8); border-left: 5px solid #2d7a4a; }
+  .kpi-card.GOOD { background: linear-gradient(135deg, #d0f0d8, #b8e6c8); border-left: 5px solid #5fa972; }
   .kpi-card.OK   { background: linear-gradient(135deg, #fff8d8, #fff0a8); border-left: 5px solid #f9a825; }
   .kpi-card.WARN { background: linear-gradient(135deg, #ffe8c8, #ffd9a8); border-left: 5px solid #ef6c00; }
   .kpi-card.BAD  { background: linear-gradient(135deg, #ffebee, #ffcdd2); border-left: 5px solid #c62828; }
@@ -1985,7 +1985,7 @@ HTML = r'''<!DOCTYPE html>
     font-weight: 800;
   }
 
-  .kpi-value.GOOD { color: #2d7a4a; }
+  .kpi-value.GOOD { color: #5fa972; }
   .kpi-value.OK   { color: #f9a825; }
   .kpi-value.WARN { color: #ef6c00; }
   .kpi-value.BAD  { color: #c62828; }
@@ -2005,7 +2005,7 @@ HTML = r'''<!DOCTYPE html>
     float: right;
   }
 
-  .kpi-badge.GOOD { background: #2d7a4a; color: white; }
+  .kpi-badge.GOOD { background: #5fa972; color: white; }
   .kpi-badge.OK   { background: #f9a825; color: white; }
   .kpi-badge.WARN { background: #ef6c00; color: white; }
   .kpi-badge.BAD  { background: #c62828; color: white; }
@@ -2022,7 +2022,7 @@ HTML = r'''<!DOCTYPE html>
   }
 
   .pl-table th {
-    background: linear-gradient(135deg, #2d7a4a, #3a9f5d);
+    background: linear-gradient(135deg, #5fa972, #7ac97f);
     color: white;
     padding: 10px 12px;
     text-align: left;
@@ -2076,7 +2076,7 @@ HTML = r'''<!DOCTYPE html>
   .bank-match h4 {
     font-size: 14px;
     font-weight: 700;
-    color: #2d7a4a;
+    color: #5fa972;
     margin-bottom: 12px;
   }
 
@@ -2096,7 +2096,7 @@ HTML = r'''<!DOCTYPE html>
     padding: 16px;
     background: linear-gradient(135deg, #f5faf8, #f0f8f5);
     margin-bottom: 10px;
-    border-left: 4px solid #3a9f5d;
+    border-left: 4px solid #7ac97f;
     box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     transition: all 0.3s ease;
   }
@@ -2106,7 +2106,7 @@ HTML = r'''<!DOCTYPE html>
   .advice-title {
     font-size: 13px;
     font-weight: 700;
-    color: #2d7a4a;
+    color: #5fa972;
     margin-bottom: 6px;
   }
 
@@ -2127,7 +2127,7 @@ HTML = r'''<!DOCTYPE html>
 
   .feature {
     font-size: 13px;
-    color: #2d7a4a;
+    color: #5fa972;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -2152,7 +2152,7 @@ HTML = r'''<!DOCTYPE html>
     <div class="logo-container">
       <svg class="logo-svg" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
         <!-- E-MIETAテキスト（ネイビー色） -->
-        <text x="100" y="48" font-size="40" font-weight="900" fill="#1e5a7a" text-anchor="middle" font-family="Arial, sans-serif">E-MIETA</text>
+        <text x="100" y="48" font-size="40" font-weight="900" fill="#4a9fc8" text-anchor="middle" font-family="Arial, sans-serif">E-MIETA</text>
         <!-- テキストの背景グロー効果 -->
         <text x="100" y="48" font-size="40" font-weight="900" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" text-anchor="middle" font-family="Arial, sans-serif">E-MIETA</text>
       </svg>
@@ -2164,32 +2164,32 @@ HTML = r'''<!DOCTYPE html>
     <!-- SAMO キャラクター（背景透過） -->
     <svg class="character-corner" viewBox="0 0 70 90" xmlns="http://www.w3.org/2000/svg">
       <!-- 体 -->
-      <ellipse cx="35" cy="55" rx="16" ry="22" fill="#3a9f5d" opacity="0.9"/>
+      <ellipse cx="35" cy="55" rx="16" ry="22" fill="#7ac97f" opacity="0.9"/>
       <!-- 頭 -->
-      <circle cx="35" cy="28" r="14" fill="#3a9f5d" opacity="0.95"/>
+      <circle cx="35" cy="28" r="14" fill="#7ac97f" opacity="0.95"/>
       <!-- 耳 -->
-      <circle cx="23" cy="20" r="6" fill="#2d7a4a" opacity="0.8"/>
-      <circle cx="47" cy="20" r="6" fill="#2d7a4a" opacity="0.8"/>
+      <circle cx="23" cy="20" r="6" fill="#5fa972" opacity="0.8"/>
+      <circle cx="47" cy="20" r="6" fill="#5fa972" opacity="0.8"/>
       <!-- 目の白い部分 -->
       <circle cx="30" cy="26" r="3" fill="white" opacity="0.9"/>
       <circle cx="40" cy="26" r="3" fill="white" opacity="0.9"/>
       <!-- 目の黒い部分 -->
-      <circle cx="30" cy="27" r="1.5" fill="#1e5a7a"/>
-      <circle cx="40" cy="27" r="1.5" fill="#1e5a7a"/>
+      <circle cx="30" cy="27" r="1.5" fill="#4a9fc8"/>
+      <circle cx="40" cy="27" r="1.5" fill="#4a9fc8"/>
       <!-- 目の光 -->
       <circle cx="30.5" cy="26" r="0.8" fill="white" opacity="0.7"/>
       <circle cx="40.5" cy="26" r="0.8" fill="white" opacity="0.7"/>
       <!-- 笑み -->
-      <path d="M32 33 Q35 35 38 33" stroke="#1e5a7a" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.8"/>
+      <path d="M32 33 Q35 35 38 33" stroke="#4a9fc8" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.8"/>
       <!-- 頬 -->
       <circle cx="24" cy="31" r="2" fill="#4fb573" opacity="0.5"/>
       <circle cx="46" cy="31" r="2" fill="#4fb573" opacity="0.5"/>
       <!-- 手 -->
-      <circle cx="20" cy="50" r="5" fill="#2d7a4a" opacity="0.85"/>
-      <circle cx="50" cy="50" r="5" fill="#2d7a4a" opacity="0.85"/>
+      <circle cx="20" cy="50" r="5" fill="#5fa972" opacity="0.85"/>
+      <circle cx="50" cy="50" r="5" fill="#5fa972" opacity="0.85"/>
       <!-- 足 -->
-      <rect x="29" y="74" width="5" height="10" fill="#1e5a7a" rx="2.5" opacity="0.8"/>
-      <rect x="36" y="74" width="5" height="10" fill="#1e5a7a" rx="2.5" opacity="0.8"/>
+      <rect x="29" y="74" width="5" height="10" fill="#4a9fc8" rx="2.5" opacity="0.8"/>
+      <rect x="36" y="74" width="5" height="10" fill="#4a9fc8" rx="2.5" opacity="0.8"/>
     </svg>
   </div>
 
