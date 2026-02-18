@@ -1544,7 +1544,7 @@ HTML = r'''<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>E-MIETA・銀行仕訳 | スマート仕訳EXCEL×MIETA経営健康診断</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%232d7a4a' width='100' height='100'/><text x='50' y='65' font-size='60' font-weight='bold' fill='%23a0d995' text-anchor='middle' font-family='Arial'>E</text></svg>">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'><defs><style>.favicon-text { font-family: Arial, sans-serif; font-weight: 900; font-size: 72px; text-anchor: middle; }</style></defs><rect fill='%233a9f5d' width='128' height='128' rx='20'/><text x='64' y='95' class='favicon-text' fill='%231e5a7a'>E</text><text x='64' y='95' class='favicon-text' fill='none' stroke='%23ffffff' stroke-width='1.5' opacity='0.4'>E</text></svg>">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
