@@ -1550,6 +1550,7 @@ HTML = r'''<!DOCTYPE html>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideInScale { from { opacity: 0; transform: scale(0.8) translateX(-20px); } to { opacity: 1; transform: scale(1) translateX(0); } }
   @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
   @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
@@ -1610,35 +1611,38 @@ HTML = r'''<!DOCTYPE html>
   .header-top {
     display: flex;
     align-items: center;
-    gap: 14px;
+    justify-content: space-between;
+    gap: 20px;
   }
 
   .title-logo {
-    height: 72px;
+    height: 100px;
     width: auto;
     display: block;
     object-fit: contain;
-    flex-shrink: 1;
+    animation: slideInScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   }
 
   .character-logo {
-    height: 52px;
+    height: 48px;
     width: auto;
     flex-shrink: 0;
     object-fit: contain;
+    animation: fadeIn 0.5s ease-out 0.2s forwards;
+    opacity: 0;
   }
 
   .header-title {
     display: flex;
-    align-items: center;
-    gap: 12px;
+    align-items: flex-end;
+    gap: 16px;
     flex: 1;
   }
 
   .subtitle {
     font-size: 11px;
     color: var(--text-light);
-    margin-top: 6px;
+    margin-top: 8px;
     font-weight: 500;
     letter-spacing: 0.3px;
   }
@@ -2217,8 +2221,9 @@ HTML = r'''<!DOCTYPE html>
 
   /* ===== Responsive ===== */
   @media (max-width: 480px) {
-    .header-title { gap: 8px; }
-    .title-logo { height: 48px; }
+    .header-top { gap: 12px; }
+    .header-title { gap: 10px; }
+    .title-logo { height: 72px; }
     .character-logo { height: 36px; }
     .features { grid-template-columns: 1fr; }
     .kpi-grid { grid-template-columns: 1fr; }
@@ -2230,10 +2235,18 @@ HTML = r'''<!DOCTYPE html>
 <div class="container">
   <div class="header">
     <div class="header-top">
-      <div class="header-title">
-        <img src="/static/emieta-logo.png" alt="E-MIETA" class="title-logo">
-        <img src="/static/samo-char.png" alt="SAMO" class="character-logo">
-      </div>
+      <svg src="/static/emieta-text.svg" class="title-logo" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#26c6da;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#66bb6a;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <text x="20" y="60" font-family="Arial, 'Hiragino Kaku Gothic ProN', sans-serif" font-size="56" font-weight="900" fill="url(#textGradient)" letter-spacing="2">
+          E-MIETA
+        </text>
+      </svg>
+      <img src="/static/samo-char.png" alt="SAMO" class="character-logo">
     </div>
     <p class="subtitle">スマート仕訳×MIETA経営健康診断</p>
   </div>
