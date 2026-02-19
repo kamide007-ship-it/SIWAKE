@@ -1603,36 +1603,44 @@ HTML = r'''<!DOCTYPE html>
   /* ===== Header ===== */
   .header {
     background: var(--white);
-    padding: 20px 24px;
+    padding: 20px 24px 16px;
     border-bottom: 1px solid var(--border);
   }
 
   .header-top {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
+  }
+
+  .title-logo {
+    height: 72px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+    flex-shrink: 1;
   }
 
   .character-logo {
-    height: 80px;
+    height: 52px;
     width: auto;
     flex-shrink: 0;
     object-fit: contain;
   }
 
-  .title-logo {
-    max-height: 64px;
-    width: auto;
-    display: block;
-    object-fit: contain;
+  .header-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
   }
 
-  .header-title .subtitle {
-    font-size: 12px;
+  .subtitle {
+    font-size: 11px;
     color: var(--text-light);
     margin-top: 6px;
     font-weight: 500;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
   }
 
   /* ===== Tabs ===== */
@@ -2209,9 +2217,9 @@ HTML = r'''<!DOCTYPE html>
 
   /* ===== Responsive ===== */
   @media (max-width: 480px) {
-    .header-top { flex-direction: column; text-align: center; gap: 10px; }
-    .character-logo { height: 60px; }
-    .title-logo { max-height: 48px; margin: 0 auto; }
+    .header-title { gap: 8px; }
+    .title-logo { height: 48px; }
+    .character-logo { height: 36px; }
     .features { grid-template-columns: 1fr; }
     .kpi-grid { grid-template-columns: 1fr; }
     .panel { padding: 16px; }
@@ -2222,12 +2230,12 @@ HTML = r'''<!DOCTYPE html>
 <div class="container">
   <div class="header">
     <div class="header-top">
-      <img src="/static/samo-char.png" alt="SAMO" class="character-logo">
       <div class="header-title">
         <img src="/static/emieta-logo.png" alt="E-MIETA" class="title-logo">
-        <p class="subtitle">スマート仕訳×MIETA経営健康診断</p>
+        <img src="/static/samo-char.png" alt="SAMO" class="character-logo">
       </div>
     </div>
+    <p class="subtitle">スマート仕訳×MIETA経営健康診断</p>
   </div>
 
   <div class="tabs">
