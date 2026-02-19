@@ -1546,186 +1546,269 @@ HTML = r'''<!DOCTYPE html>
 <title>E-MIETA・銀行仕訳 | スマート仕訳EXCEL×MIETA経営健康診断</title>
 <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
 <style>
+  /* ===== Reset & Base ===== */
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-  @keyframes sway { 0%, 100% { transform: translateX(-2px) rotate(0deg); } 50% { transform: translateX(2px) rotate(0.5deg); } }
-  @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+  @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+
+  :root {
+    --cyan: #26c6da;
+    --cyan-light: #b2ebf2;
+    --cyan-pale: #e0f7fa;
+    --green: #66bb6a;
+    --green-light: #c8e6c9;
+    --green-pale: #f1f8e9;
+    --navy: #1a3a4a;
+    --text: #37474f;
+    --text-light: #78909c;
+    --border: #e0e0e0;
+    --bg: #fafcfd;
+    --white: #ffffff;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
+    --gradient-main: linear-gradient(135deg, var(--cyan) 0%, var(--green) 100%);
+    --gradient-soft: linear-gradient(135deg, var(--cyan-pale) 0%, var(--green-pale) 100%);
+  }
 
   body {
-    font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
-    background: white;
-    min-height: 100vh; display: flex; align-items: flex-start;
-    justify-content: center; padding: 30px 20px;
-    position: relative;
+    font-family: -apple-system, 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Yu Gothic UI', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 24px 16px;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
   }
 
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: transparent;
-    pointer-events: none;
-    z-index: -1;
-  }
-
+  /* ===== Container ===== */
   .container {
-    background: white;
-    border-radius: 28px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
     width: 100%;
     max-width: 720px;
     overflow: hidden;
-    animation: fadeIn 0.5s ease-out;
-    position: relative;
-    border: 6px solid;
-    border-image: linear-gradient(135deg, #00bcd4 0%, #4ade80 100%) 1;
+    animation: fadeIn 0.4s ease-out;
+    border-top: 3px solid;
+    border-image: var(--gradient-main) 1;
   }
 
+  /* ===== Header ===== */
   .header {
-    background: white;
-    padding: 24px 28px;
-    position: relative;
-    overflow: hidden;
+    background: var(--white);
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
   }
 
   .header-top {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 16px;
   }
 
   .character-logo {
-    height: 100px;
+    height: 80px;
     width: auto;
-    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.08));
     flex-shrink: 0;
+    object-fit: contain;
   }
 
-  .header-title h1 {
-    font-size: 48px;
-    color: white;
-    font-weight: 900;
-    background: linear-gradient(135deg, #1e5a7a 0%, #2d7a99 100%);
-    padding: 24px 32px;
-    border-radius: 16px;
-    margin: 0;
-    text-align: center;
-    letter-spacing: -1px;
-    box-shadow: 0 4px 15px rgba(30, 90, 122, 0.2);
+  .title-logo {
+    max-height: 64px;
+    width: auto;
+    display: block;
+    object-fit: contain;
   }
 
   .header-title .subtitle {
-    font-size: 14px;
-    color: #666;
-    margin-top: 12px;
-    text-align: center;
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 6px;
     font-weight: 500;
+    letter-spacing: 0.5px;
   }
 
-  .header::before {
-    display: none;
-  }
-
-  .header::after {
-    display: none;
-  }
-
-  .logo-container {
-    display: none;
-  }
-
-  .logo-svg {
-    display: none;
-  }
-
-  .character-corner {
-    display: none;
-  }
-
-  /* タブ */
+  /* ===== Tabs ===== */
   .tabs {
     display: flex;
-    border-bottom: 1px solid #e8e8e8;
-    background: white;
-    padding: 0 8px;
+    background: #f5f7f8;
+    padding: 6px;
+    gap: 4px;
   }
 
   .tab {
     flex: 1;
-    padding: 16px 8px;
+    padding: 12px 8px;
     text-align: center;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    color: #5b9a83;
-    border-bottom: 3px solid transparent;
-    margin-bottom: -2px;
-    transition: all 0.3s ease;
-    position: relative;
+    color: var(--text-light);
+    border: none;
+    border-radius: var(--radius-sm);
+    transition: all 0.25s ease;
+    background: transparent;
   }
 
-  .tab:hover { color: #5fa972; }
+  .tab:hover {
+    color: var(--cyan);
+    background: rgba(38,198,218,0.06);
+  }
 
   .tab.active {
-    color: #7ac97f;
-    border-bottom-color: #7ac97f;
-    background: white;
+    color: var(--white);
+    background: var(--gradient-main);
+    box-shadow: 0 2px 8px rgba(38,198,218,0.25);
   }
 
   .tab-icon {
-    font-size: 20px;
+    width: 20px;
+    height: 20px;
     display: block;
-    margin-bottom: 4px;
-    transition: transform 0.3s ease;
+    margin: 0 auto 3px;
+    transition: transform 0.25s ease;
+    stroke: currentColor;
   }
 
-  .tab.active .tab-icon { transform: scale(1.15); }
+  .tab.active .tab-icon { transform: scale(1.1); }
 
+  /* ===== SVG Icon classes ===== */
+  .section-icon {
+    width: 16px; height: 16px;
+    display: inline-block;
+    vertical-align: -2px;
+    stroke: currentColor;
+    flex-shrink: 0;
+  }
+
+  .feature-icon {
+    width: 18px; height: 18px;
+    display: inline-block;
+    vertical-align: -3px;
+    stroke: var(--cyan);
+    flex-shrink: 0;
+  }
+
+  .upload-icon {
+    width: 40px; height: 40px;
+    display: block;
+    margin: 0 auto 8px;
+    stroke: var(--cyan);
+    animation: breathe 2.5s ease-in-out infinite;
+  }
+
+  .check-icon {
+    width: 18px; height: 18px;
+    display: inline-block;
+    margin-right: 6px;
+    vertical-align: -2px;
+    stroke: var(--green);
+  }
+
+  .hint-icon {
+    width: 14px; height: 14px;
+    display: inline-block;
+    margin-right: 3px;
+    vertical-align: -2px;
+    stroke: var(--cyan);
+  }
+
+  .btn-icon {
+    width: 16px; height: 16px;
+    display: inline-block;
+    margin-right: 4px;
+    vertical-align: -2px;
+    stroke: currentColor;
+  }
+
+  .btn-icon-sm {
+    width: 14px; height: 14px;
+    display: inline-block;
+    margin-right: 3px;
+    vertical-align: -2px;
+    stroke: currentColor;
+  }
+
+  /* ===== Panel ===== */
   .panel {
     display: none;
-    padding: 28px;
+    padding: 24px;
     animation: fadeIn 0.3s ease-out;
   }
 
   .panel.active { display: block; }
 
-  /* 共通 */
+  /* ===== Section Title ===== */
   .section-title {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
-    color: #5fa972;
+    color: var(--navy);
     margin-bottom: 14px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #e8e8e8;
+    border-bottom: 2px solid transparent;
+    border-image: var(--gradient-main) 1;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
   }
 
+  /* ===== Features ===== */
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .feature {
+    font-size: 12px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gradient-soft);
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    border: 1px solid rgba(38,198,218,0.12);
+    transition: all 0.2s ease;
+  }
+
+  .feature:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* ===== Upload Area ===== */
   .upload-area {
-    border: 2.5px dashed #82c792;
-    border-radius: 18px;
-    padding: 32px;
+    border: 2px dashed var(--cyan-light);
+    border-radius: var(--radius);
+    padding: 28px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.3s ease;
-    background: linear-gradient(135deg, #f0faf7 0%, #e8f5f0 100%);
-    margin-bottom: 18px;
+    transition: all 0.25s ease;
+    background: var(--gradient-soft);
+    margin-bottom: 16px;
     position: relative;
   }
 
   .upload-area:hover {
-    border-color: #7ac97f;
-    background: linear-gradient(135deg, #e8f8f3 0%, #dff3eb 100%);
-    transform: translateY(-2px);
+    border-color: var(--cyan);
+    background: linear-gradient(135deg, #d5f5f8 0%, #e6f5e0 100%);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
   }
 
   .upload-area.drag {
-    border-color: #7ac97f;
-    background: linear-gradient(135deg, #e8f8f3 0%, #dff3eb 100%);
-    box-shadow: 0 8px 20px rgba(58, 159, 93, 0.15);
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(38,198,218,0.15);
   }
 
   .upload-area input[type=file] {
@@ -1735,81 +1818,79 @@ HTML = r'''<!DOCTYPE html>
     cursor: pointer;
   }
 
-  .upload-icon {
-    font-size: 40px;
-    margin-bottom: 10px;
-    animation: pulse 2s infinite;
-  }
-
   .upload-text {
-    font-size: 15px;
-    color: #5fa972;
+    font-size: 14px;
+    color: var(--navy);
     font-weight: 600;
   }
 
   .upload-sub {
-    font-size: 12px;
-    color: #6ba88a;
-    margin-top: 6px;
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 4px;
   }
 
+  /* ===== File Info ===== */
   .file-info {
-    background: linear-gradient(135deg, #d0f0d8 0%, #b8e6c8 100%);
-    border-radius: 12px;
-    padding: 12px 16px;
+    background: linear-gradient(135deg, var(--green-pale), var(--green-light));
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
     display: none;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
-    font-size: 13px;
-    color: #1f5a38;
+    gap: 8px;
+    margin-bottom: 14px;
+    font-size: 12px;
+    color: #2e7d32;
     font-weight: 600;
   }
 
   .file-info.show { display: flex; }
 
+  /* ===== Buttons ===== */
   .btn {
     width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, #7ac97f, #4fb573);
-    color: white;
+    padding: 14px;
+    background: var(--gradient-main);
+    color: var(--white);
     border: none;
-    border-radius: 14px;
-    font-size: 16px;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(58, 159, 93, 0.25);
+    transition: all 0.25s ease;
+    box-shadow: 0 3px 12px rgba(38,198,218,0.2);
+    letter-spacing: 0.3px;
   }
 
   .btn:hover:not(:disabled) {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(58, 159, 93, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(38,198,218,0.3);
   }
 
-  .btn:active:not(:disabled) { transform: translateY(-1px); }
+  .btn:active:not(:disabled) { transform: translateY(0); }
 
   .btn:disabled {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: not-allowed;
     transform: none;
   }
 
   .btn-eval {
-    background: linear-gradient(135deg, #4a9fc8, #2d7a9a);
-    box-shadow: 0 4px 15px rgba(30, 90, 122, 0.25);
+    background: linear-gradient(135deg, #039be5, var(--cyan));
+    box-shadow: 0 3px 12px rgba(3,155,229,0.2);
   }
 
   .btn-eval:hover:not(:disabled) {
-    box-shadow: 0 8px 25px rgba(30, 90, 122, 0.35);
+    box-shadow: 0 6px 20px rgba(3,155,229,0.3);
   }
 
+  /* ===== Progress ===== */
   .progress {
     display: none;
-    margin-top: 18px;
-    background: #d0e8e0;
+    margin-top: 16px;
+    background: #e8eef0;
     border-radius: 100px;
-    height: 8px;
+    height: 6px;
     overflow: hidden;
   }
 
@@ -1818,26 +1899,29 @@ HTML = r'''<!DOCTYPE html>
   .progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #7ac97f, #4fb573, #4a9fc8);
+    background: var(--gradient-main);
+    background-size: 200% 100%;
     border-radius: 100px;
     transition: width 0.3s ease;
-    box-shadow: 0 0 10px rgba(58, 159, 93, 0.4);
+    animation: shimmer 2s linear infinite;
   }
 
   .status {
     text-align: center;
-    font-size: 13px;
-    color: #5b9a83;
-    margin-top: 12px;
-    min-height: 20px;
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 10px;
+    min-height: 18px;
     font-weight: 500;
   }
 
+  /* ===== Result ===== */
   .result {
     display: none;
-    margin-top: 20px;
-    background: linear-gradient(135deg, #d0f0d8, #b8e6c8);
-    border-radius: 16px;
+    margin-top: 18px;
+    background: var(--gradient-soft);
+    border: 1px solid var(--green-light);
+    border-radius: var(--radius);
     padding: 24px;
     text-align: center;
   }
@@ -1846,199 +1930,211 @@ HTML = r'''<!DOCTYPE html>
 
   .dl-btn {
     display: inline-block;
-    padding: 14px 32px;
-    background: linear-gradient(135deg, #7ac97f, #4fb573);
-    color: white;
-    border-radius: 12px;
+    padding: 12px 28px;
+    background: var(--gradient-main);
+    color: var(--white);
+    border-radius: var(--radius-sm);
     text-decoration: none;
     font-weight: 700;
-    font-size: 15px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(58, 159, 93, 0.25);
+    font-size: 14px;
+    transition: all 0.25s ease;
+    box-shadow: 0 3px 12px rgba(38,198,218,0.2);
   }
 
   .dl-btn:hover {
-    background: linear-gradient(135deg, #2d8850, #3fa065);
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(58, 159, 93, 0.35);
+    box-shadow: 0 6px 20px rgba(38,198,218,0.3);
   }
 
+  /* ===== Error ===== */
   .error-msg {
     display: none;
-    margin-top: 14px;
-    padding: 14px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #ffebee, #ffcdd2);
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: #ffeef0;
+    border: 1px solid #ffcdd2;
     color: #c62828;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
   }
 
   .error-msg.show { display: block; }
 
-  /* P&L テキスト入力 */
+  /* ===== P&L Textarea ===== */
   .pl-textarea {
     width: 100%;
-    height: 260px;
+    height: 240px;
     padding: 14px;
-    border: 2px solid #d8d8d8;
-    border-radius: 14px;
-    font-size: 13px;
-    font-family: 'Courier New', monospace;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-family: 'SF Mono', 'Consolas', monospace;
     resize: vertical;
-    transition: all 0.3s ease;
-    background: white;
+    transition: all 0.25s ease;
+    background: var(--white);
+    color: var(--text);
   }
 
   .pl-textarea:focus {
     outline: none;
-    border-color: #7ac97f;
-    box-shadow: 0 0 0 3px rgba(58, 159, 93, 0.1);
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(38,198,218,0.1);
   }
 
   .hint {
-    font-size: 12px;
-    color: #6ba88a;
-    margin-top: 8px;
-    margin-bottom: 16px;
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 6px;
+    margin-bottom: 14px;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
 
-  /* 評価結果 */
+  /* ===== Evaluation Result ===== */
   .eval-result { display: none; }
-  .eval-result.show { display: block; margin-top: 24px; }
+  .eval-result.show { display: block; margin-top: 20px; }
 
   .verdict-box {
-    border-radius: 18px;
-    padding: 24px;
-    margin-bottom: 22px;
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 20px;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border: 1px solid;
   }
 
-  .verdict-excellent { background: linear-gradient(135deg, #d0f0d8, #9dd9b8); border: 2px solid #5fa972; }
-  .verdict-good      { background: linear-gradient(135deg, #d0f0d8, #b8e6c8); border: 2px solid #388e3c; }
-  .verdict-ok        { background: linear-gradient(135deg, #fff8d8, #fff0a8); border: 2px solid #f9a825; }
-  .verdict-warn      { background: linear-gradient(135deg, #ffe8c8, #ffd9a8); border: 2px solid #ef6c00; }
-  .verdict-bad       { background: linear-gradient(135deg, #ffebee, #ffcdd2); border: 2px solid #c62828; }
+  .verdict-excellent { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-color: #66bb6a; }
+  .verdict-good      { background: linear-gradient(135deg, #e8f5e9, #dcedc8); border-color: #66bb6a; }
+  .verdict-ok        { background: linear-gradient(135deg, #fffde7, #fff9c4); border-color: #fdd835; }
+  .verdict-warn      { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-color: #ff9800; }
+  .verdict-bad       { background: linear-gradient(135deg, #fce4ec, #ffcdd2); border-color: #ef5350; }
 
   .verdict-label {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 800;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
   .verdict-score {
-    font-size: 15px;
-    opacity: 0.9;
+    font-size: 14px;
+    opacity: 0.85;
     font-weight: 600;
   }
 
   .verdict-period {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    margin-bottom: 10px;
-    opacity: 0.8;
+    margin-bottom: 8px;
+    opacity: 0.7;
   }
 
-  /* KPI表 */
+  /* ===== KPI Cards ===== */
   .kpi-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 22px;
+    gap: 10px;
+    margin-bottom: 20px;
   }
 
   .kpi-card {
-    border-radius: 14px;
-    padding: 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    border: 1px solid;
+    transition: all 0.2s ease;
   }
 
-  .kpi-card:hover { transform: translateY(-2px); }
+  .kpi-card:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
 
-  .kpi-card.GOOD { background: linear-gradient(135deg, #d0f0d8, #b8e6c8); border-left: 5px solid #5fa972; }
-  .kpi-card.OK   { background: linear-gradient(135deg, #fff8d8, #fff0a8); border-left: 5px solid #f9a825; }
-  .kpi-card.WARN { background: linear-gradient(135deg, #ffe8c8, #ffd9a8); border-left: 5px solid #ef6c00; }
-  .kpi-card.BAD  { background: linear-gradient(135deg, #ffebee, #ffcdd2); border-left: 5px solid #c62828; }
+  .kpi-card.GOOD { background: #f1f8e9; border-color: #c5e1a5; }
+  .kpi-card.OK   { background: #fffde7; border-color: #fff59d; }
+  .kpi-card.WARN { background: #fff3e0; border-color: #ffcc80; }
+  .kpi-card.BAD  { background: #fce4ec; border-color: #f8bbd0; }
 
-  .kpi-name  {
-    font-size: 12px;
-    color: #556;
-    margin-bottom: 6px;
-    font-weight: 500;
+  .kpi-name {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-bottom: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
   }
 
   .kpi-value {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 800;
+    font-variant-numeric: tabular-nums;
   }
 
-  .kpi-value.GOOD { color: #5fa972; }
+  .kpi-value.GOOD { color: #43a047; }
   .kpi-value.OK   { color: #f9a825; }
   .kpi-value.WARN { color: #ef6c00; }
   .kpi-value.BAD  { color: #c62828; }
 
   .kpi-bench {
-    font-size: 11px;
-    color: #888;
-    margin-top: 4px;
+    font-size: 10px;
+    color: var(--text-light);
+    margin-top: 2px;
     font-weight: 500;
   }
 
   .kpi-badge {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
-    padding: 3px 8px;
+    padding: 2px 7px;
     border-radius: 100px;
     float: right;
   }
 
-  .kpi-badge.GOOD { background: #5fa972; color: white; }
-  .kpi-badge.OK   { background: #f9a825; color: white; }
-  .kpi-badge.WARN { background: #ef6c00; color: white; }
-  .kpi-badge.BAD  { background: #c62828; color: white; }
+  .kpi-badge.GOOD { background: #66bb6a; color: white; }
+  .kpi-badge.OK   { background: #fdd835; color: #333; }
+  .kpi-badge.WARN { background: #ff9800; color: white; }
+  .kpi-badge.BAD  { background: #ef5350; color: white; }
 
-  /* P&L表 */
+  /* ===== P&L Table ===== */
   .pl-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 22px;
-    font-size: 13px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     overflow: hidden;
   }
 
   .pl-table th {
-    background: linear-gradient(135deg, #5fa972, #7ac97f);
-    color: white;
+    background: var(--gradient-main);
+    color: var(--white);
     padding: 10px 12px;
     text-align: left;
     font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
   }
 
   .pl-table td {
     padding: 8px 12px;
-    border-bottom: 1px solid #e8e8e8;
+    border-bottom: 1px solid #f0f0f0;
   }
 
   .pl-table tr:last-child td { border-bottom: none; }
+  .pl-table tr:hover td { background: rgba(38,198,218,0.03); }
 
   .pl-table .subtotal td {
-    background: #f5f5f5;
+    background: #f8fafb;
     font-weight: 600;
   }
 
   .pl-table .profit td {
-    background: linear-gradient(135deg, #d0f0d8, #b8e6c8);
+    background: #f1f8e9;
     font-weight: 700;
-    color: #1f5a38;
+    color: #2e7d32;
   }
 
   .pl-table .profit-neg td {
-    background: linear-gradient(135deg, #ffebee, #ffe8ec);
+    background: #fce4ec;
     font-weight: 700;
     color: #c62828;
   }
@@ -2049,100 +2145,86 @@ HTML = r'''<!DOCTYPE html>
   }
 
   .pl-table .ratio {
-    color: #888;
-    font-size: 11px;
+    color: #aaa;
+    font-size: 10px;
   }
 
-  /* 銀行突合 */
+  /* ===== Bank Match ===== */
   .bank-match {
-    background: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 22px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    margin-bottom: 20px;
   }
 
   .bank-match h4 {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
-    color: #5fa972;
-    margin-bottom: 12px;
+    color: var(--navy);
+    margin-bottom: 10px;
   }
 
   .match-row {
     display: flex;
     justify-content: space-between;
-    font-size: 13px;
+    font-size: 12px;
     padding: 6px 0;
-    border-bottom: 1px solid #e8e8e8;
+    border-bottom: 1px solid #f0f0f0;
   }
 
   .match-row:last-child { border-bottom: none; }
 
-  /* アドバイス */
+  /* ===== Advice ===== */
   .advice-box {
-    border-radius: 14px;
-    padding: 16px;
-    background: white;
-    margin-bottom: 10px;
-    border-left: 4px solid #7ac97f;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-    transition: all 0.3s ease;
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    background: var(--white);
+    margin-bottom: 8px;
+    border-left: 3px solid var(--cyan);
+    border-top: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s ease;
   }
 
-  .advice-box:hover { transform: translateX(2px); }
+  .advice-box:hover {
+    box-shadow: var(--shadow-sm);
+    border-left-color: var(--green);
+  }
 
   .advice-title {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
-    color: #5fa972;
-    margin-bottom: 6px;
+    color: var(--navy);
+    margin-bottom: 4px;
   }
 
   .advice-text {
-    font-size: 13px;
-    color: #555;
+    font-size: 12px;
+    color: var(--text);
     line-height: 1.7;
-    font-weight: 500;
+    font-weight: 400;
   }
 
-  /* features */
-  .features {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 22px;
-  }
-
-  .feature {
-    font-size: 13px;
-    color: #5fa972;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #f8f8f8;
-    padding: 10px 14px;
-    border-radius: 12px;
-    font-weight: 500;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-    transition: all 0.3s ease;
-  }
-
-  .feature:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  /* ===== Responsive ===== */
+  @media (max-width: 480px) {
+    .header-top { flex-direction: column; text-align: center; gap: 10px; }
+    .character-logo { height: 60px; }
+    .title-logo { max-height: 48px; margin: 0 auto; }
+    .features { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: 1fr; }
+    .panel { padding: 16px; }
   }
 </style>
 </head>
 <body>
 <div class="container">
   <div class="header">
-    <!-- ロゴ -->
     <div class="header-top">
-      <img src="/static/logo.svg" alt="SAMO Character" class="character-logo">
+      <img src="/static/samo-char.png" alt="SAMO" class="character-logo">
       <div class="header-title">
-        <h1>E-MIETA</h1>
+        <img src="/static/emieta-logo.png" alt="E-MIETA" class="title-logo">
         <p class="subtitle">スマート仕訳×MIETA経営健康診断</p>
       </div>
     </div>
@@ -2150,44 +2232,44 @@ HTML = r'''<!DOCTYPE html>
 
   <div class="tabs">
     <div class="tab active" onclick="switchTab('excel')">
-      <span class="tab-icon">📊</span><span>CSV変換</span>
+      <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"></line><path d="M17 5H9.5a1.5 1.5 0 0 0-1.5 1.5v12a1.5 1.5 0 0 0 1.5 1.5H17"></path><path d="M6 12H2m20 0h-4"></path></svg><span>CSV変換</span>
     </div>
     <div class="tab" onclick="switchTab('eval')">
-      <span class="tab-icon">🔍</span><span>経営分析</span>
+      <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg><span>経営分析</span>
     </div>
   </div>
 
   <!-- ===== TAB1: Excel変換 ===== -->
   <div class="panel active" id="panel-excel">
     <div class="features">
-      <div class="feature"><span>📅</span> 月別自動振分け</div>
-      <div class="feature"><span>🏷️</span> 科目自動判定</div>
-      <div class="feature"><span>💰</span> 数式計算対応</div>
-      <div class="feature"><span>📊</span> 集計シート生成</div>
+      <div class="feature"><svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> 月別自動振分け</div>
+      <div class="feature"><svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg> 科目自動判定</div>
+      <div class="feature"><svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10m-3-3h6"></path></svg> 数式計算対応</div>
+      <div class="feature"><svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"></line><path d="M17 5H9.5a1.5 1.5 0 0 0-1.5 1.5v12a1.5 1.5 0 0 0 1.5 1.5H17"></path><path d="M6 12H2m20 0h-4"></path></svg> 集計シート生成</div>
     </div>
 
-    <div class="section-title">📄 銀行明細CSVをアップロード</div>
+    <div class="section-title"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg> 銀行明細CSVをアップロード</div>
     <div class="upload-area" id="dropZone">
       <input type="file" id="fileInput" accept=".csv">
-      <div class="upload-icon">📥</div>
+      <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
       <div class="upload-text">CSVファイルをここにドロップ</div>
       <div class="upload-sub">またはクリックして選択（Shift-JIS/UTF-8 自動判定）</div>
     </div>
-    <div class="file-info" id="fileInfo"><span>✓</span><span id="fileName"></span></div>
-    <button class="btn" id="convertBtn" disabled onclick="convert()">🚀 Excelを生成する</button>
+    <div class="file-info" id="fileInfo"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span id="fileName"></span></div>
+    <button class="btn" id="convertBtn" disabled onclick="convert()"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"></path><path d="M22 2l-7 20-4-9-9-4 20-7z"></path></svg> Excelを生成する</button>
     <div class="progress" id="progress"><div class="progress-bar" id="progressBar"></div></div>
     <div class="status" id="status"></div>
     <div class="error-msg" id="errorMsg"></div>
     <div class="result" id="result">
-      <div style="font-size:48px;margin-bottom:12px">🎉</div>
-      <div style="font-weight:700;font-size:17px;color:#1b5e20;margin-bottom:4px">Excel生成完了！</div>
-      <div style="font-size:12px;color:#666;margin-bottom:16px">すぐにダウンロードできます</div>
-      <a id="dlLink" class="dl-btn" href="#" download>📥 Excelをダウンロード</a>
+      <svg style="width:48px;height:48px;margin-bottom:12px;stroke:#43a047" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="16 8 10 16 7 13"></polyline></svg>
+      <div style="font-weight:700;font-size:16px;color:#2e7d32;margin-bottom:4px">Excel生成完了</div>
+      <div style="font-size:11px;color:#78909c;margin-bottom:16px">すぐにダウンロードできます</div>
+      <a id="dlLink" class="dl-btn" href="#" download><svg class="btn-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Excelをダウンロード</a>
     </div>
 
     <!-- 使い方ガイド -->
-    <div style="margin-top:28px; padding-top:28px; border-top: 2px solid #f0e6f8;">
-      <div class="section-title">💡 CSV変換の使い方</div>
+    <div style="margin-top:28px; padding-top:28px; border-top: 1px solid #e0e0e0;">
+      <div class="section-title"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> CSV変換の使い方</div>
       <div class="advice-box">
         <div class="advice-title">【ステップ1】対応するCSV形式を確認</div>
         <div class="advice-text">
@@ -2206,9 +2288,9 @@ HTML = r'''<!DOCTYPE html>
         <div class="advice-title">【ステップ3】Excel生成ボタンをクリック</div>
         <div class="advice-text">
           「Excelを生成する」ボタンをクリックすると、以下が自動生成されます：<br>
-          • 📊 年間サマリーシート（月別集計）<br>
-          • 📋 各月シート（月別詳細明細）<br>
-          • 🏷️ カテゴリ別集計シート
+          • 年間サマリーシート（月別集計）<br>
+          • 各月シート（月別詳細明細）<br>
+          • カテゴリ別集計シート
         </div>
       </div>
       <div class="advice-box">
@@ -2222,7 +2304,7 @@ HTML = r'''<!DOCTYPE html>
 
   <!-- ===== TAB2: 経営分析 ===== -->
   <div class="panel" id="panel-eval">
-    <div class="section-title">📋 月次P&L内訳を貼り付け</div>
+    <div class="section-title"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg> 月次P&L内訳を貼り付け</div>
     <textarea class="pl-textarea" id="plText" placeholder="例：
 2026年 2月
 売上　13,416,660
@@ -2233,18 +2315,18 @@ HTML = r'''<!DOCTYPE html>
 交際費　　　17,000
 旅費交通費　250,000
 （以下つづき...）"></textarea>
-    <div class="hint">💡 会計ソフトなどからP&Lをコピペするだけで分析できます</div>
+    <div class="hint"><svg class="hint-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 会計ソフトなどからP&Lをコピペするだけで分析できます</div>
 
-    <div class="section-title" style="margin-top:20px">🏦 銀行明細CSV（オプション）</div>
+    <div class="section-title" style="margin-top:20px"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10m-3-3h6"></path></svg> 銀行明細CSV（オプション）</div>
     <div class="upload-area" id="dropZone2">
       <input type="file" id="fileInput2" accept=".csv">
-      <div class="upload-icon">📤</div>
+      <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
       <div class="upload-text">CSVをドロップ（省略可）</div>
       <div class="upload-sub">入力すると銀行残高と自動照合します</div>
     </div>
-    <div class="file-info" id="fileInfo2"><span>✓</span><span id="fileName2"></span></div>
+    <div class="file-info" id="fileInfo2"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span id="fileName2"></span></div>
 
-    <button class="btn btn-eval" id="evalBtn" onclick="evaluate()">🔍 経営分析を実行</button>
+    <button class="btn btn-eval" id="evalBtn" onclick="evaluate()"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg> 経営分析を実行</button>
     <div class="progress" id="progress2"><div class="progress-bar" id="progressBar2"></div></div>
     <div class="status" id="status2"></div>
     <div class="error-msg" id="errorMsg2"></div>
@@ -2253,8 +2335,8 @@ HTML = r'''<!DOCTYPE html>
     <div class="eval-result" id="evalResult"></div>
 
     <!-- 使い方ガイド -->
-    <div style="margin-top:28px; padding-top:28px; border-top: 2px solid #f0e6f8;">
-      <div class="section-title">💡 経営分析の使い方</div>
+    <div style="margin-top:28px; padding-top:28px; border-top: 1px solid #e0e0e0;">
+      <div class="section-title"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 経営分析の使い方</div>
       <div class="advice-box">
         <div class="advice-title">【分析結果の見方】総合スコア</div>
         <div class="advice-text">
@@ -2447,7 +2529,7 @@ function renderEvalResult(d) {
 
   // P&L表
   html += `
-  <div class="section-title">📋 損益計算書（簡易）</div>
+  <div class="section-title"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg> 損益計算書（簡易）</div>
   <table class="pl-table">
     <tr><th>項目</th><th class="right">金額</th><th class="right">売上比</th></tr>
     <tr><td>売上</td><td class="right">${fmt(d.revenue)}</td><td class="right ratio">100.0%</td></tr>
@@ -2465,7 +2547,7 @@ function renderEvalResult(d) {
   if (d.bank_summary) {
     const b = d.bank_summary;
     html += `
-  <div class="section-title">🏦 銀行データとの照合</div>
+  <div class="section-title"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10m-3-3h6"></path></svg> 銀行データとの照合</div>
   <div class="bank-match">
     <h4>対象月: ${d.period}　（${b.count}件）</h4>
     <div class="match-row"><span>銀行入金合計</span><span style="font-weight:600">${fmt(b.bank_in)}</span></div>
@@ -2478,7 +2560,7 @@ function renderEvalResult(d) {
 
   // 費用明細
   html += `
-  <div class="section-title">📂 費用内訳（全科目）</div>
+  <div class="section-title"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> 費用内訳（全科目）</div>
   <table class="pl-table">
     <tr><th>科目</th><th class="right">金額</th><th class="right">売上比</th></tr>`;
   for (const [k, v] of Object.entries(d.items).sort((a,b)=>b[1]-a[1])) {
@@ -2487,7 +2569,7 @@ function renderEvalResult(d) {
   html += `</table>`;
 
   // アドバイス
-  html += `<div class="section-title">💡 改善アドバイス</div>`;
+  html += `<div class="section-title"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 改善アドバイス</div>`;
   for (const [title, text] of d.advice) {
     html += `<div class="advice-box"><div class="advice-title">【${title}】</div><div class="advice-text">${text}</div></div>`;
   }
