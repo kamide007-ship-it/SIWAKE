@@ -1616,19 +1616,20 @@ HTML = r'''<!DOCTYPE html>
   }
 
   .title-logo {
-    height: 100px;
+    height: 56px;
     width: auto;
     display: block;
     object-fit: contain;
+    flex: 1;
     animation: slideInScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   }
 
   .character-logo {
-    height: 48px;
+    height: 36px;
     width: auto;
     flex-shrink: 0;
     object-fit: contain;
-    animation: fadeIn 0.5s ease-out 0.2s forwards;
+    animation: fadeIn 0.5s ease-out 0.3s forwards;
     opacity: 0;
   }
 
@@ -2223,8 +2224,8 @@ HTML = r'''<!DOCTYPE html>
   @media (max-width: 480px) {
     .header-top { gap: 12px; }
     .header-title { gap: 10px; }
-    .title-logo { height: 72px; }
-    .character-logo { height: 36px; }
+    .title-logo { height: 40px; }
+    .character-logo { height: 28px; }
     .features { grid-template-columns: 1fr; }
     .kpi-grid { grid-template-columns: 1fr; }
     .panel { padding: 16px; }
