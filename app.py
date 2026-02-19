@@ -1616,7 +1616,7 @@ HTML = r'''<!DOCTYPE html>
   }
 
   .title-logo {
-    height: 100px;
+    height: 80px;
     width: auto;
     display: block;
     object-fit: contain;
@@ -1624,11 +1624,11 @@ HTML = r'''<!DOCTYPE html>
   }
 
   .character-logo {
-    height: 48px;
+    height: 32px;
     width: auto;
     flex-shrink: 0;
     object-fit: contain;
-    animation: fadeIn 0.5s ease-out 0.2s forwards;
+    animation: fadeIn 0.5s ease-out 0.3s forwards;
     opacity: 0;
   }
 
@@ -2223,8 +2223,8 @@ HTML = r'''<!DOCTYPE html>
   @media (max-width: 480px) {
     .header-top { gap: 12px; }
     .header-title { gap: 10px; }
-    .title-logo { height: 72px; }
-    .character-logo { height: 36px; }
+    .title-logo { height: 56px; }
+    .character-logo { height: 24px; }
     .features { grid-template-columns: 1fr; }
     .kpi-grid { grid-template-columns: 1fr; }
     .panel { padding: 16px; }
@@ -2235,17 +2235,7 @@ HTML = r'''<!DOCTYPE html>
 <div class="container">
   <div class="header">
     <div class="header-top">
-      <svg src="/static/emieta-text.svg" class="title-logo" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:#26c6da;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#66bb6a;stop-opacity:1" />
-          </linearGradient>
-        </defs>
-        <text x="20" y="60" font-family="Arial, 'Hiragino Kaku Gothic ProN', sans-serif" font-size="56" font-weight="900" fill="url(#textGradient)" letter-spacing="2">
-          E-MIETA
-        </text>
-      </svg>
+      <img src="/static/emieta-logo.png" alt="E-MIETA" class="title-logo">
       <img src="/static/samo-char.png" alt="SAMO" class="character-logo">
     </div>
     <p class="subtitle">スマート仕訳×MIETA経営健康診断</p>
