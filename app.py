@@ -1597,30 +1597,23 @@ HTML = r'''<!DOCTYPE html>
   }
 
   .character-logo {
-    height: 100px;
+    height: 110px;
     width: auto;
-    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.08));
     flex-shrink: 0;
+    object-fit: contain;
   }
 
-  .header-title h1 {
-    font-size: 48px;
-    color: white;
-    font-weight: 900;
-    background: linear-gradient(135deg, #1e5a7a 0%, #2d7a99 100%);
-    padding: 24px 32px;
-    border-radius: 16px;
-    margin: 0;
-    text-align: center;
-    letter-spacing: -1px;
-    box-shadow: 0 4px 15px rgba(30, 90, 122, 0.2);
+  .title-logo {
+    max-height: 90px;
+    width: auto;
+    display: block;
+    object-fit: contain;
   }
 
   .header-title .subtitle {
-    font-size: 14px;
+    font-size: 13px;
     color: #666;
-    margin-top: 12px;
-    text-align: center;
+    margin-top: 8px;
     font-weight: 500;
   }
 
@@ -2210,11 +2203,10 @@ HTML = r'''<!DOCTYPE html>
 <body>
 <div class="container">
   <div class="header">
-    <!-- ロゴ -->
     <div class="header-top">
-      <img src="/static/logo.svg" alt="SAMO Character" class="character-logo">
+      <img src="/static/samo-char.png" alt="SAMO" class="character-logo">
       <div class="header-title">
-        <h1>E-MIETA</h1>
+        <img src="/static/emieta-logo.png" alt="E-MIETA" class="title-logo">
         <p class="subtitle">スマート仕訳×MIETA経営健康診断</p>
       </div>
     </div>
